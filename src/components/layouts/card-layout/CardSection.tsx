@@ -9,5 +9,9 @@ export const CardSection: React.FC<CardSectionProps> = ({
   children,
   className,
 }) => {
-  return <div className={cn(className)}>{children}</div>;
+  return (
+    <div className={cn("min-h-[50vh] lg:min-h-full", className)}>
+      {children}
+    </div>
+  );
 };
