@@ -13,7 +13,7 @@ export default function ProfilePage() {
           <DrayaServicesInfo />
         </CardInfo>
       </CardSection>
-      <CardSection className=" bg-white py-12 px-10 col-span-3">
+      <CardSection className="bg-white py-12 px-10 col-span-3">
         <CardContent>
           <Services />
         </CardContent>
