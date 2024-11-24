@@ -27,16 +27,16 @@ const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
       </div>
 
       {/* Mobile/Tablet Layout */}
-      <div className="lg:hidden">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="w-full">{rightSection}</div>
+      <div className="lg:hidden h-full">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden h-full">
+          <div className="w-full h-full">{rightSection}</div>
         </div>
 
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "absolute top-1/2 -translate-y-1/2 z-50 bg-white p-2 shadow-md hover:bg-gray-50 transition-all duration-300",
+              "fixed top-1/2 -translate-y-1/2 z-50 bg-white p-2 shadow-md hover:bg-gray-50 transition-all duration-300",
               isOpen
                 ? "left-[calc(100%-1px)] rounded-r-lg"
                 : "left-0 rounded-r-lg"

@@ -29,8 +29,8 @@ const services = [
 ];
 function Services() {
   return (
-    <section className="w-full">
-      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+    <section className="h-full w-full">
+      <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-4 p-2">
         {services.map((service) => (
           <Service key={service.name} service={service} />
         ))}
