@@ -1,10 +1,9 @@
-import CardContent from "@/components/CardContent";
 import CardInfo from "@/components/CardInfo";
 import CardLayout from "@/components/layouts/card-layout/CardLayout";
 import { CardSection } from "@/components/layouts/card-layout/CardSection";
 import React from "react";
 import ServiceInfo from "./ServiceInfo";
-import ServiceForm from "./ServiceForm";
+import MultiStepForm from "./MultiStepForm";
 
 function SubscriptionPage() {
   return (
@@ -14,10 +13,8 @@ function SubscriptionPage() {
           <ServiceInfo />
         </CardInfo>
       </CardSection>
-      <CardSection className="bg-white py-4 px-3 sm:py-6 sm:px-4 lg:py-16 lg:px-8 col-span-5">
-        <CardContent>
-          <ServiceForm />
-        </CardContent>
+      <CardSection className="col-span-5 flex px-10  justify-center items-center">
+        <MultiStepForm />
       </CardSection>
     </CardLayout>
   );
