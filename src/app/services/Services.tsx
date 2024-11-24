@@ -30,7 +30,7 @@ const services = [
 function Services() {
   return (
     <section className="h-full w-full">
-      <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-4 p-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 h-full">
         {services.map((service) => (
           <Service key={service.name} service={service} />
         ))}
