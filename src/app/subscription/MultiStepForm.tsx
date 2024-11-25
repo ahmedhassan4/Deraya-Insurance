@@ -2,6 +2,7 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
+  CountryField,
   DateField,
   EmailField,
   InterestedInField,
@@ -23,10 +24,11 @@ const MultiStepForm = () => {
       phone: "",
       interestedIn: "",
       date: "",
+      country: "",
     },
   });
 
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   const formSteps = [
     { title: "Name", component: NameField },
@@ -34,6 +36,7 @@ const MultiStepForm = () => {
     { title: "Phone", component: PhoneField },
     { title: "Interested", component: InterestedInField },
     { title: "Date", component: DateField },
+    { title: "Country", component: CountryField },
   ];
 
   const handleNext = async () => {

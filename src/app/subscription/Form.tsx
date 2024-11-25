@@ -14,6 +14,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import ReactFlagsSelect from "react-flags-select";
+
 export const NameField = () => {
   const {
     register,
@@ -190,5 +192,20 @@ export const DateField = () => {
         {...register("date", { required: "Date is required" })}
       />
     </div>
+  );
+};
+
+export const CountryField = () => {
+  const { setValue } = useFormContext();
+  const [selected, setSelected] = useState("");
+
+  return (
+    <ReactFlagsSelect
+      selected={selected}
+      onSelect={(code) => {
+        setSelected(code);
+        setValue("country", code);
+      }}
+    />
   );
 };
