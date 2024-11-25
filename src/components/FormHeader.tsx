@@ -4,11 +4,15 @@ import Backbutton from "./Backbutton";
 import { Text } from "rizzui";
 import Line from "@/ui/Line";
 
-function FormHeader() {
+interface FormHeaderProps {
+  buttonTitle: string;
+}
+
+function FormHeader({ buttonTitle }: FormHeaderProps) {
   return (
     <>
       <div className="w-full flex items-center justify-between">
-        <Backbutton />
+        <Backbutton title={buttonTitle} />
         <Text className="text-lg">Reset</Text>
       </div>
       <Line marginTop="10px" />

@@ -2,8 +2,10 @@
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { EmailField, NameField, PhoneField } from "./Form";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import { Button } from "rizzui";
+import Line from "@/ui/Line";
+import { useRouter } from "next/navigation";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = React.useState(1);
@@ -35,9 +37,18 @@ const MultiStepForm = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const router = useRouter();
+  const handleBackToServices = () => {
+    router.back();
+  };
+
+  const handleReset = () => {
+    methods.reset();
+    setCurrentStep(1);
+  };
+
   const onSubmit = (data: any) => {
     console.log("Form submitted:", data);
-    // Handle form submission here
   };
 
   const CurrentStepComponent = formSteps[currentStep - 1].component;
@@ -45,21 +56,40 @@ const MultiStepForm = () => {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <button
-          onClick={handleBack}
-          className="text-gray-600 flex items-center"
+      <div className="flex justify-between items-center mb-2">
+        {currentStep === 1 ? (
+          <Button
+            variant="text"
+            onClick={handleBackToServices}
+            className="text-[#111928] font-normal text-lg flex items-center"
+          >
+            <BsArrowLeft className="w-5 h-5 mr-2" />
+            Back To Services
+          </Button>
+        ) : (
+          <Button
+            variant="text"
+            onClick={handleBack}
+            className="text-[#111928] font-normal text-lg flex items-center"
+          >
+            <BsArrowLeft className="w-5 h-5 mr-2" />
+            Back
+          </Button>
+        )}
+        <Button
+          variant="text"
+          onClick={handleReset}
+          className="text-[#111928] font-normal text-lg"
         >
-          <BsArrowLeft className="w-4 h-4 mr-1" />
-          Back
-        </button>
-        <button onClick={() => methods.reset()} className="text-gray-600">
           Reset
-        </button>
+        </Button>
       </div>
+      <Line marginTop="10px" thickness=".5px" />
 
-      <h1 className="text-2xl font-bold mb-6">Let&lsquo;s Get to know you</h1>
-      <p className="text-gray-600 mb-8">Fill in the blanks to proceed!</p>
+      <div className="my-8">
+        <h1 className="text-4xl font-bold mb-4">Let&apos;s Get to know you</h1>
+        <p className="text-[#6B7280] text-lg">Fill in the blanks to proceed!</p>
+      </div>
 
       {/* Progress bar */}
       <div className="flex justify-between mb-8 relative">
@@ -67,19 +97,33 @@ const MultiStepForm = () => {
           <React.Fragment key={index}>
             <div className="flex flex-col items-center">
               <div
-                className={`w-6 h-6 rounded-full ${
-                  index + 1 <= currentStep ? "bg-green-500" : "bg-gray-200"
-                } flex items-center justify-center text-white text-sm`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 
+                  ${
+                    index + 1 < currentStep
+                      ? "bg-[#B5BE34] text-white" // Completed step
+                      : index + 1 === currentStep
+                      ? "border-2 border-[#B5BE34] text-[#B5BE34]" // Current step
+                      : "border-2 border-gray-200 text-gray-400" // Future step
+                  }
+                `}
               >
-                {index + 1 <= currentStep && "✓"}
+                {index + 1 < currentStep && <BsCheck className="w-5 h-5" />}
               </div>
             </div>
             {index < totalSteps - 1 && (
-              <div
-                className={`flex-1 h-1 mt-3 ${
-                  index + 1 < currentStep ? "bg-green-500" : "bg-gray-200"
-                }`}
-              />
+              <div className="flex-1 relative">
+                <div
+                  className={`absolute top-1/2 left-0 h-[1px] w-full transition-all duration-300
+                    ${
+                      index + 1 < currentStep
+                        ? "bg-[#B5BE34]" // Completed line
+                        : index + 1 === currentStep
+                        ? "bg-gradient-to-r from-[#B5BE34] to-gray-200" // Current line
+                        : "bg-gray-200" // Future line
+                    }
+                  `}
+                />
+              </div>
             )}
           </React.Fragment>
         ))}
@@ -95,16 +139,21 @@ const MultiStepForm = () => {
           {/* Navigation buttons */}
           <div className="flex justify-between">
             {currentStep === totalSteps ? (
-              <button
+              <Button
                 type="submit"
-                className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                size="lg"
+                className="w-full px-6 py-2 bg-[#B5BE34] text-white rounded hover:bg-[#aab239]"
               >
                 Submit
-              </button>
+              </Button>
             ) : (
-              <Button onClick={handleNext}>
+              <Button
+                onClick={handleNext}
+                className="w-full text-base font-medium hover:bg-[#aab239]"
+                size="lg"
+              >
                 Next
-                <BsArrowRight className="w-4 h-4 ml-1" />
+                <BsArrowRight className="w-4 h-4 ml-2" />
               </Button>
             )}
           </div>

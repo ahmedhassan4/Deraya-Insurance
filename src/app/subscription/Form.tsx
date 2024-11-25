@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { Input } from "rizzui";
 
 export const NameField = () => {
   const {
@@ -9,10 +10,10 @@ export const NameField = () => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Name
-        </label>
-        <input
+        <Input
+          label="Name"
+          size="lg"
+          placeholder="Enter your first name"
           {...register("name", {
             required: "Name is required",
             minLength: {
@@ -20,8 +21,6 @@ export const NameField = () => {
               message: "Name must be at least 2 characters",
             },
           })}
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500"
-          placeholder="Enter your first name"
         />
         {errors.name?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -42,10 +41,11 @@ export const EmailField = () => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Email
-        </label>
-        <input
+        <Input
+          label="Email"
+          type="email"
+          size="lg"
+          placeholder="Enter your email"
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -53,9 +53,6 @@ export const EmailField = () => {
               message: "Invalid email address",
             },
           })}
-          type="email"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500"
-          placeholder="Enter your email"
         />
         {errors.email?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -76,10 +73,11 @@ export const PhoneField = () => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Phone Number
-        </label>
-        <input
+        <Input
+          label="Phone"
+          type="tel"
+          size="lg"
+          placeholder="Enter your phone number"
           {...register("phone", {
             required: "Phone number is required",
             pattern: {
@@ -87,9 +85,6 @@ export const PhoneField = () => {
               message: "Invalid phone number",
             },
           })}
-          type="tel"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500"
-          placeholder="Enter your phone number"
         />
         {errors.phone?.message && (
           <p className="mt-1 text-sm text-red-500">

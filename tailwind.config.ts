@@ -20,7 +20,7 @@ export default {
 
         primary: {
           lighter: colors.gray[200],
-          DEFAULT: colors.gray[800],
+          DEFAULT: "#B5BE34",
           dark: colors.gray[950],
           foreground: colors.white,
         },
