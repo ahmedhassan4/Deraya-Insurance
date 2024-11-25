@@ -62,6 +62,7 @@ const MultiStepForm = () => {
 
   const onSubmit = (data: any) => {
     console.log("Form submitted:", data);
+    router.push("/plan");
   };
 
   const CurrentStepComponent = formSteps[currentStep - 1].component;

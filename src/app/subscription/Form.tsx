@@ -206,6 +206,9 @@ export const CountryField = () => {
         setSelected(code);
         setValue("country", code);
       }}
+      placeholder="Select Country"
+      searchable
+      searchPlaceholder="Search countries"
     />
   );
 };
