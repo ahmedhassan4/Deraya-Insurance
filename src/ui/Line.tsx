@@ -2,7 +2,7 @@ import React from "react";
 import { LineProps } from "@/types/Line";
 
 const Line = ({
-  color = "#000",
+  color = "#8d8d8d",
   thickness = "1px",
   width = "100%",
   marginTop = "32px",

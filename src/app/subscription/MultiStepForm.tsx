@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { EmailField, NameField, PhoneField } from "./Form";
+import {
+  DateField,
+  EmailField,
+  InterestedInField,
+  NameField,
+  PhoneField,
+} from "./Form";
 import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import { Button } from "rizzui";
 import Line from "@/ui/Line";
@@ -15,15 +21,19 @@ const MultiStepForm = () => {
       name: "",
       email: "",
       phone: "",
+      interestedIn: "",
+      date: "",
     },
   });
 
-  const totalSteps = 3;
+  const totalSteps = 5;
 
   const formSteps = [
     { title: "Name", component: NameField },
     { title: "Email", component: EmailField },
     { title: "Phone", component: PhoneField },
+    { title: "Interested", component: InterestedInField },
+    { title: "Date", component: DateField },
   ];
 
   const handleNext = async () => {
