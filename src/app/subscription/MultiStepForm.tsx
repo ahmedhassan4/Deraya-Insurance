@@ -3,6 +3,7 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { EmailField, NameField, PhoneField } from "./Form";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { Button } from "rizzui";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = React.useState(1);
@@ -101,14 +102,10 @@ const MultiStepForm = () => {
                 Submit
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center"
-              >
+              <Button onClick={handleNext}>
                 Next
                 <BsArrowRight className="w-4 h-4 ml-1" />
-              </button>
+              </Button>
             )}
           </div>
         </form>

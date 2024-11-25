@@ -1,9 +1,11 @@
+"use client";
 import { CardInfoProps } from "@/types/cardInfo";
 import Line from "@/ui/Line";
 import Image from "next/image";
 import React from "react";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { PiInstagramLogo } from "react-icons/pi";
+import DropdownAction from "./charts/dropdown-action";
 
 const socialLinks = [
   {
@@ -24,7 +26,21 @@ const socialLinks = [
   },
 ];
 
+const options = [
+  {
+    value: "english",
+    label: "English",
+  },
+  {
+    value: "arabic",
+    label: "Arabic",
+  },
+];
+
 const CardInfo: React.FC<CardInfoProps> = ({ children }) => {
+  function handleChange(viewType: string) {
+    console.log("viewType", viewType);
+  }
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <div>
@@ -42,10 +58,11 @@ const CardInfo: React.FC<CardInfoProps> = ({ children }) => {
       <div className="flex items-center gap-4">
         <SocialLinks />
         <div className="h-6 w-px bg-gray-300"></div>
-        <select className="bg-transparent border-none px-2 py-1  text-white font-medium text-md">
-          <option value="en">English</option>
-          <option value="ar">Arabic</option>
-        </select>
+        <DropdownAction
+          options={options}
+          onChange={handleChange}
+          dropdownClassName="!z-0"
+        />
       </div>
     </div>
   );
