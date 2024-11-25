@@ -37,7 +37,10 @@ const options = [
   },
 ];
 
-const CardInfo: React.FC<CardInfoProps> = ({ children }) => {
+const CardInfo: React.FC<CardInfoProps> = ({
+  children,
+  displaySocialIcons = true,
+}) => {
   function handleChange(viewType: string) {
     console.log("viewType", viewType);
   }
@@ -54,16 +57,17 @@ const CardInfo: React.FC<CardInfoProps> = ({ children }) => {
 
         <div className="mt-8">{children}</div>
       </div>
-
-      <div className="flex items-center gap-4">
-        <SocialLinks />
-        <div className="h-6 w-px bg-gray-300"></div>
-        <DropdownAction
-          options={options}
-          onChange={handleChange}
-          dropdownClassName="!z-0"
-        />
-      </div>
+      {displaySocialIcons && (
+        <div className="flex items-center gap-4">
+          <SocialLinks />
+          <div className="h-6 w-px bg-gray-300"></div>
+          <DropdownAction
+            options={options}
+            onChange={handleChange}
+            dropdownClassName="!z-0"
+          />
+        </div>
+      )}
     </div>
   );
 };

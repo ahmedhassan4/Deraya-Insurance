@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
-import { Text, Title } from "rizzui";
+import { Text } from "rizzui";
 
 const servicesDetailes = {
   name: "International Medical Insurance",
@@ -26,21 +26,18 @@ function ServiceInfo() {
         height={100}
       ></Image>
 
-      <Title className="text-white mt-5">{servicesDetailes.name}</Title>
+      <Text className="text-white text-3xl mt-5">{servicesDetailes.name}</Text>
 
       <div className="mt-5">
         {servicesDetailes.discrtiption.map((detailes, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={index} className="flex items-center gap-2 mt-1">
             <IoCheckmarkCircleSharp color="white" />
-
-            <Text className="text-white text-base  font-medium">
-              {detailes}
-            </Text>
+            <Text className="text-white text-sm  font-medium">{detailes}</Text>
           </div>
         ))}
       </div>
 
-      <Text className="text-white mt-3 font-semibold italic">
+      <Text className="text-white mt-5 font-semibold italic">
         Compare prices
       </Text>
     </div>

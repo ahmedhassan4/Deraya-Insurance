@@ -8,12 +8,12 @@ import MultiStepForm from "./MultiStepForm";
 function SubscriptionPage() {
   return (
     <CardLayout>
-      <CardSection className="bg-[#B5BE34] bg-[url('/Main.png')] rounded-lg bg-cover bg-center py-6 px-4 sm:py-8 sm:px-6 lg:py-10 lg:px-8 col-span-4">
-        <CardInfo>
+      <CardSection className="bg-[#B5BE34] bg-[url('/Main.png')] bg-cover rounded-lg bg-center py-12 px-[72px] ">
+        <CardInfo displaySocialIcons={false}>
           <ServiceInfo />
         </CardInfo>
       </CardSection>
-      <CardSection className="col-span-5 flex px-10  justify-center items-center">
+      <CardSection className=" px-6 py-12 flex items-center justify-center">
         <MultiStepForm />
       </CardSection>
     </CardLayout>
