@@ -10,7 +10,7 @@ interface ServiceProps {
 
 function Service({ service: { name, image } }: ServiceProps) {
   return (
-    <div className="group">
+    <div className="group cursor-pointer">
       <div className=" rounded-lg sm:rounded-xl h-full w-full p-3 sm:p-4 lg:p-3 xl:p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col  border border-gray-100 hover:border-[#B5BE34]">
         <div className="relative flex items-center justify-center mb-2 sm:mb-3">
           <Image

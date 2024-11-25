@@ -19,7 +19,7 @@ const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
     <div className="h-screen w-full p-4 sm:p-6 lg:p-6">
       <div
         className={cn(
-          "w-full h-full grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-lg overflow-hidden hidden lg:grid",
+          "w-full h-full grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-lg overflow-hidden hidden lg:grid overflow-y-auto",
           className
         )}
       >
