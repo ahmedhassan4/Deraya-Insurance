@@ -11,68 +11,72 @@ const OPTIONS: EmblaOptionsType = { slidesToScroll: "auto" };
 // const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const plans = [
-    {
-      title: "Bupa",
-      pricing: "Starting from $434",
-      annualCeiling: "$2.5M",
-      services: [
-        "Inpatient Treatment",
-        "Advanced Imaging",
-        "Cancer Treatment",
-        "Childbirth",
-      ],
-      deductible: "$8,500 will be applied to inpatient services"
-    },
-    {
-      title: "Bupa",
-      pricing: "Starting from $434",
-      annualCeiling: "$2.5M",
-      services: [
-        "Inpatient Treatment",
-        "Advanced Imaging",
-        "Cancer Treatment",
-        "Childbirth",
-      ],
-      deductible: "$8,500 will be applied to inpatient services"
-    },
-    {
-      title: "Bupa",
-      pricing: "Starting from $434",
-      annualCeiling: "$2.5M",
-      services: [
-        "Inpatient Treatment",
-        "Advanced Imaging",
-        "Cancer Treatment",
-        "Childbirth",
-      ],
-      deductible: "$8,500 will be applied to inpatient services"
-    },
-    {
-      title: "Bupa",
-      pricing: "Starting from $434",
-      annualCeiling: "$2.5M",
-      services: [
-        "Inpatient Treatment",
-        "Advanced Imaging",
-        "Cancer Treatment",
-        "Childbirth",
-      ],
-      deductible: "$8,500 will be applied to inpatient services"
-    },
-    {
-      title: "Bupa",
-      pricing: "Starting from $434",
-      annualCeiling: "$2.5M",
-      services: [
-        "Inpatient Treatment",
-        "Advanced Imaging",
-        "Cancer Treatment",
-        "Childbirth",
-      ],
-      deductible: "$8,500 will be applied to inpatient services"
-    },
-  
-]
+  {
+    title: "Bupa",
+    pricing: "434",
+    annualCeiling: "2.5M",
+    services: [
+      "Inpatient Treatment",
+      "Advanced Imaging",
+      "Cancer Treatment",
+      "Childbirth",
+      "Deductible of $8,500 will be applied to inpatient services",
+    ],
+    deductible: "8,500 will be applied to inpatient services",
+  },
+  {
+    title: "Bupa",
+    pricing: "434",
+    annualCeiling: "2.5M",
+    services: [
+      "Inpatient Treatment",
+      "Advanced Imaging",
+      "Cancer Treatment",
+      "Childbirth",
+      "Deductible of $8,500 will be applied to inpatient services",
+    ],
+    deductible: "8,500 will be applied to inpatient services",
+  },
+  {
+    title: "Bupa",
+    pricing: "434",
+    annualCeiling: "2.5M",
+    services: [
+      "Inpatient Treatment",
+      "Advanced Imaging",
+      "Cancer Treatment",
+      "Childbirth",
+      "Deductible of $8,500 will be applied to inpatient services",
+    ],
+    deductible: "8,500 will be applied to inpatient services",
+  },
+  {
+    title: "Bupa",
+    pricing: "434",
+    annualCeiling: "2.5M",
+    services: [
+      "Inpatient Treatment",
+      "Advanced Imaging",
+      "Cancer Treatment",
+      "Childbirth",
+      "Deductible of $8,500 will be applied to inpatient services",
+    ],
+    deductible: "8,500 will be applied to inpatient services",
+  },
+  {
+    title: "Bupa",
+    pricing: "434",
+    annualCeiling: "2.5M",
+    services: [
+      "Inpatient Treatment",
+      "Advanced Imaging",
+      "Cancer Treatment",
+      "Childbirth",
+      "Deductible of $8,500 will be applied to inpatient services",
+    ],
+    deductible: "8,500 will be applied to inpatient services",
+  },
+];
 
 function SubscriptionPlan() {
   return (
