@@ -7,6 +7,8 @@ import { Button, Input, Radio, Text } from "rizzui";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import SubmitModal from "./SubmitModal";
+import useModal from "@/components/modal-views/use-madal";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -32,8 +34,14 @@ function Contact() {
     },
   });
 
+  const { openModal, closeModal } = useModal();
+
   const onSubmit = (data: ContactFormProps) => {
     console.log(data);
+    openModal({
+      view: <SubmitModal closeModal={closeModal} />,
+      customSize: "420px",
+    });
   };
 
   return (
