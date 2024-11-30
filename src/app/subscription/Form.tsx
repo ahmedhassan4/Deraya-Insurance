@@ -29,7 +29,13 @@ export const NameField = () => {
           label="Name"
           size="lg"
           placeholder="Enter your first name"
-          {...register("name")}
+          {...register("name", {
+            required: "Name is required",
+            minLength: {
+              value: 2,
+              message: "Name must be at least 2 characters",
+            },
+          })}
         />
         {errors.name?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -55,7 +61,13 @@ export const EmailField = () => {
           type="email"
           size="lg"
           placeholder="Enter your email"
-          {...register("email")}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
         />
         {errors.email?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -81,7 +93,13 @@ export const PhoneField = () => {
           type="tel"
           size="lg"
           placeholder="Enter your phone number"
-          {...register("phone")}
+          {...register("phone", {
+            required: "Phone number is required",
+            pattern: {
+              value: /^\+?[\d\s-]{10,}$/,
+              message: "Invalid phone number",
+            },
+          })}
         />
         {errors.phone?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -99,31 +117,30 @@ export const InterestedInField = () => {
     formState: { errors },
   } = useFormContext();
 
-  const [value, setValue] = useState("Inpatient");
+  const [value, setValue] = useState("apple");
 
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 ">
-          I’m interested in:
-        </label>
         <RadioGroup
           value={value}
-          setValue={(val) => {
-            setValue(val);
-            // Update the form value
-            register("interestedIn").onChange({
-              target: { name: "interestedIn", value: val },
-            });
-          }}
+          setValue={setValue}
+          {...register("interestedIn", {
+            required: "Please select your interest level",
+          })}
         >
           <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 ">
-            <Radio label="Inpatient" value="Inpatient" />
+            <Radio
+              label="Interested"
+              value="interested"
+              {...register("interestedIn")}
+            />
           </div>
           <div className="rounded-lg border hover:border-[#B5BE34]  p-4 mt-2">
             <Radio
-              label="Inpatient & Outpatient"
-              value="InpatientAndOutpatient"
+              label="Not Interested"
+              value="notInterested"
+              {...register("interestedIn")}
             />
           </div>
         </RadioGroup>
@@ -139,27 +156,18 @@ export const InterestedInField = () => {
 };
 
 export const DateField = () => {
-  const {
-    register,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
-
+  const { register, setValue } = useFormContext();
   const [date, setDate] = useState<Date | undefined>(undefined);
+  // register("date");
   return (
-    <div className="mt-4 mb-2">
-      <label className="block text-sm font-medium text-gray-700">
-        Date of Birth
-      </label>
+    <div className="space-y-4">
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
-            size="lg"
+            variant={"outline"}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground",
-              errors.date && "border-destructive"
+              !date && "text-muted-foreground"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -170,50 +178,37 @@ export const DateField = () => {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={(selectedDate) => {
-              setDate(selectedDate);
-              setValue("date", selectedDate);
+            onSelect={(date) => {
+              setDate(date);
+              setValue("date", date);
             }}
             initialFocus
           />
         </PopoverContent>
       </Popover>
 
-      <input type="hidden" {...register("date")} />
-
-      {errors.date && (
-        <p className=" text-sm mt-2 text-red">
-          {errors.date.message as string}
-        </p>
-      )}
+      <input
+        type="hidden"
+        {...register("date", { required: "Date is required" })}
+      />
     </div>
   );
 };
+
 export const CountryField = () => {
-  const {
-    setValue,
-    formState: { errors },
-  } = useFormContext();
+  const { setValue } = useFormContext();
   const [selected, setSelected] = useState("");
 
   return (
-    <>
-      <label>Country of residence</label>
-      <ReactFlagsSelect
-        selected={selected}
-        onSelect={(code) => {
-          setSelected(code);
-          setValue("country", code);
-        }}
-        placeholder="Select Country"
-        searchable
-        searchPlaceholder="Search countries"
-      />
-      {errors.country?.message && (
-        <p className="mt-1 text-sm text-red-500">
-          {String(errors.country.message)}
-        </p>
-      )}
-    </>
+    <ReactFlagsSelect
+      selected={selected}
+      onSelect={(code) => {
+        setSelected(code);
+        setValue("country", code);
+      }}
+      placeholder="Select Country"
+      searchable
+      searchPlaceholder="Search countries"
+    />
   );
 };

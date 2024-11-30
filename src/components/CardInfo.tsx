@@ -64,7 +64,7 @@ const CardInfo: React.FC<CardInfoProps> = ({
           <DropdownAction
             options={options}
             onChange={handleChange}
-            dropdownClassName="!z-0"
+            dropdownClassName="z-80"
           />
         </div>
       )}

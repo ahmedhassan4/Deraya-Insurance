@@ -30,9 +30,11 @@ function ServiceInfo() {
 
       <div className="mt-5">
         {servicesDetailes.discrtiption.map((detailes, index) => (
-          <div key={index} className="flex items-center gap-2 mt-1">
-            <IoCheckmarkCircleSharp color="white" />
-            <Text className="text-white text-sm  font-medium">{detailes}</Text>
+          <div key={index} className="flex items-start gap-2 mt-1">
+            <IoCheckmarkCircleSharp color="white" className="flex-0" />
+            <Text className="text-white text-sm  font-medium flex-1">
+              {detailes}
+            </Text>
           </div>
         ))}
       </div>
