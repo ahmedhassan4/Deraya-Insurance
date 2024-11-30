@@ -126,7 +126,11 @@ function Contact() {
           />
         </div>
 
-        <Button type="submit" color="primary" className="w-full">
+        <Button
+          type="submit"
+          color="primary"
+          className="w-full hover:bg-[#aab239]"
+        >
           Submit
         </Button>
       </form>

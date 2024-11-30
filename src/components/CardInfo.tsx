@@ -2,10 +2,11 @@
 import { CardInfoProps } from "@/types/cardInfo";
 import Line from "@/ui/Line";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { PiInstagramLogo } from "react-icons/pi";
-import DropdownAction from "./charts/dropdown-action";
+// import DropdownAction from "./charts/dropdown-action";
+import { Select } from "rizzui";
 
 const socialLinks = [
   {
@@ -41,9 +42,10 @@ const CardInfo: React.FC<CardInfoProps> = ({
   children,
   displaySocialIcons = true,
 }) => {
-  function handleChange(viewType: string) {
-    console.log("viewType", viewType);
-  }
+  // function handleChange(viewType: string) {
+  //   console.log("viewType", viewType);
+  // }
+  const [value, setValue] = useState("English");
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <div>
@@ -61,10 +63,11 @@ const CardInfo: React.FC<CardInfoProps> = ({
         <div className="flex items-center gap-4">
           <SocialLinks />
           <div className="h-6 w-px bg-gray-300"></div>
-          <DropdownAction
+          <Select
             options={options}
-            onChange={handleChange}
-            dropdownClassName="z-80"
+            value={value}
+            onChange={setValue}
+            className="w-28 border border-white rounded-lg hover:border-white hover:rounded-lg  text-white"
           />
         </div>
       )}
