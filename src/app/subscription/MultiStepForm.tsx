@@ -13,26 +13,19 @@ import { useRouter } from "next/navigation";
 import { Button } from "rizzui";
 import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import Line from "@/ui/Line";
-
-// Define form data type
-type FormData = {
-  name: string;
-  email: string;
-  phone: string;
-  interestedIn: string;
-  date: Date | null;
-  country: string;
-};
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormData, subscriptionSchema } from "./subscription.schema";
 
 const MultistepForm = () => {
   const methods = useForm<FormData>({
     mode: "onChange",
+    resolver: zodResolver(subscriptionSchema),
     defaultValues: {
       name: "",
       email: "",
       phone: "",
-      interestedIn: "",
-      date: null,
+      interestedIn: "Inpatient",
+      date: undefined,
       country: "",
     },
   });
@@ -69,6 +62,15 @@ const MultistepForm = () => {
       fields: ["phone"],
     },
     {
+      title: "DateField",
+      component: (
+        <div className="space-y-4">
+          <DateField />
+        </div>
+      ),
+      fields: ["date"],
+    },
+    {
       title: "CountryField",
       component: (
         <div className="space-y-4">
@@ -77,6 +79,7 @@ const MultistepForm = () => {
       ),
       fields: ["country"],
     },
+
     {
       title: "InterestedInField",
       component: (
@@ -85,15 +88,6 @@ const MultistepForm = () => {
         </div>
       ),
       fields: ["interestedIn"],
-    },
-    {
-      title: "DateField",
-      component: (
-        <div className="space-y-4">
-          <DateField />
-        </div>
-      ),
-      fields: ["date"],
     },
   ];
 
@@ -226,15 +220,14 @@ const MultistepForm = () => {
           {/* Navigation Buttons */}
           <div className="flex justify-between">
             {currentStep < formSteps.length - 1 ? (
-              <Button
+              <button
                 type="button"
-                size="lg"
                 onClick={handleNextStep}
-                className="w-full text-base font-medium hover:bg-[#aab239]"
+                className="w-full text-base text-white bg-[#B5BE34] hover:bg-[#aab239] flex items-center justify-center py-2 px-4 rounded"
               >
                 Next
                 <BsArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              </button>
             ) : (
               <Button
                 type="submit"

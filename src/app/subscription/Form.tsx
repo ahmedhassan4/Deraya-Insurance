@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { Input, Radio, RadioGroup } from "rizzui";
+import { Controller, useFormContext } from "react-hook-form";
+import { Input, Radio } from "rizzui";
 
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -29,13 +29,7 @@ export const NameField = () => {
           label="Name"
           size="lg"
           placeholder="Enter your first name"
-          {...register("name", {
-            required: "Name is required",
-            minLength: {
-              value: 2,
-              message: "Name must be at least 2 characters",
-            },
-          })}
+          {...register("name")}
         />
         {errors.name?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -61,13 +55,7 @@ export const EmailField = () => {
           type="email"
           size="lg"
           placeholder="Enter your email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            },
-          })}
+          {...register("email")}
         />
         {errors.email?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -93,13 +81,7 @@ export const PhoneField = () => {
           type="tel"
           size="lg"
           placeholder="Enter your phone number"
-          {...register("phone", {
-            required: "Phone number is required",
-            pattern: {
-              value: /^\+?[\d\s-]{10,}$/,
-              message: "Invalid phone number",
-            },
-          })}
+          {...register("phone")}
         />
         {errors.phone?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -113,37 +95,40 @@ export const PhoneField = () => {
 
 export const InterestedInField = () => {
   const {
-    register,
+    control,
     formState: { errors },
   } = useFormContext();
-
-  const [value, setValue] = useState("apple");
 
   return (
     <div className="space-y-4">
       <div>
-        <RadioGroup
-          value={value}
-          setValue={setValue}
-          {...register("interestedIn", {
-            required: "Please select your interest level",
-          })}
-        >
-          <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 ">
-            <Radio
-              label="Interested"
-              value="interested"
-              {...register("interestedIn")}
-            />
-          </div>
-          <div className="rounded-lg border hover:border-[#B5BE34]  p-4 mt-2">
-            <Radio
-              label="Not Interested"
-              value="notInterested"
-              {...register("interestedIn")}
-            />
-          </div>
-        </RadioGroup>
+        <label className="block text-sm font-medium text-gray-700">
+          I&apos;m interested in:
+        </label>
+        <Controller
+          name="interestedIn"
+          control={control}
+          render={({ field }) => (
+            <div>
+              <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5">
+                <Radio
+                  {...field}
+                  label="Inpatient"
+                  value="Inpatient"
+                  checked={field.value === "Inpatient"}
+                />
+              </div>
+              <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-2">
+                <Radio
+                  {...field}
+                  label="Inpatient & Outpatient"
+                  value="InpatientAndOutpatient"
+                  checked={field.value === "InpatientAndOutpatient"}
+                />
+              </div>
+            </div>
+          )}
+        />
 
         {errors.interestedIn?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -156,18 +141,27 @@ export const InterestedInField = () => {
 };
 
 export const DateField = () => {
-  const { register, setValue } = useFormContext();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
+
   const [date, setDate] = useState<Date | undefined>(undefined);
-  // register("date");
   return (
-    <div className="space-y-4">
+    <div className="mt-4 mb-2">
+      <label className="block mb-1.5 text-sm font-medium text-gray-700">
+        Date of Birth
+      </label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
+            variant="outline"
+            size="lg"
             className={cn(
               "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
+              errors.date && "border-destructive"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -178,37 +172,52 @@ export const DateField = () => {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={(date) => {
-              setDate(date);
-              setValue("date", date);
+            onSelect={(selectedDate) => {
+              setDate(selectedDate);
+              setValue("date", selectedDate);
             }}
             initialFocus
           />
         </PopoverContent>
       </Popover>
 
-      <input
-        type="hidden"
-        {...register("date", { required: "Date is required" })}
-      />
+      <input type="hidden" {...register("date")} />
+
+      {errors.date && (
+        <p className=" text-sm mt-2 text-red">
+          {errors.date.message as string}
+        </p>
+      )}
     </div>
   );
 };
-
 export const CountryField = () => {
-  const { setValue } = useFormContext();
+  const {
+    setValue,
+    formState: { errors },
+  } = useFormContext();
   const [selected, setSelected] = useState("");
 
   return (
-    <ReactFlagsSelect
-      selected={selected}
-      onSelect={(code) => {
-        setSelected(code);
-        setValue("country", code);
-      }}
-      placeholder="Select Country"
-      searchable
-      searchPlaceholder="Search countries"
-    />
+    <div>
+      <label className="block mb-1.5 text-sm font-medium text-gray-700">
+        Country of residence
+      </label>
+      <ReactFlagsSelect
+        selected={selected}
+        onSelect={(code) => {
+          setSelected(code);
+          setValue("country", code);
+        }}
+        placeholder="Select Country"
+        searchable
+        searchPlaceholder="Search countries"
+      />
+      {errors.country?.message && (
+        <p className="mt-1 text-sm text-red-500">
+          {String(errors.country.message)}
+        </p>
+      )}
+    </div>
   );
 };
