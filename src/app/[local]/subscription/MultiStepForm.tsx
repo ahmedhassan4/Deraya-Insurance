@@ -15,6 +15,7 @@ import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import Line from "@/ui/Line";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormData, subscriptionSchema } from "./subscription.schema";
+import { useLocale, useTranslations } from "next-intl";
 
 const MultistepForm = () => {
   const methods = useForm<FormData>({
@@ -29,6 +30,9 @@ const MultistepForm = () => {
       country: "",
     },
   });
+
+  const t = useTranslations("subscription");
+  const locale = useLocale();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = React.useState<number[]>([]);
@@ -145,8 +149,12 @@ const MultistepForm = () => {
             onClick={handlePrevStep}
             className="text-[#111928] font-normal text-lg flex items-center"
           >
-            <BsArrowLeft className="w-5 h-5 mr-2" />
-            Back
+            {locale === "en" ? (
+              <BsArrowLeft className="w-5 h-5 mr-2" />
+            ) : (
+              <BsArrowRight className="w-5 h-5 ml-2" />
+            )}
+            {t("back")}
           </Button>
         ) : (
           <Button
@@ -154,8 +162,12 @@ const MultistepForm = () => {
             onClick={handleBackToServices}
             className="text-[#111928] font-normal text-lg flex items-center"
           >
-            <BsArrowLeft className="w-5 h-5 mr-2" />
-            Back To Services
+            {locale === "en" ? (
+              <BsArrowLeft className="w-5 h-5 mr-2" />
+            ) : (
+              <BsArrowRight className="w-5 h-5 ml-3" />
+            )}
+            {t("back_to_services")}
           </Button>
         )}
         <Button
@@ -163,14 +175,14 @@ const MultistepForm = () => {
           onClick={handleReset}
           className="text-[#111928] font-normal text-lg"
         >
-          Reset
+          {t("reset")}
         </Button>
       </div>
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-8">
-        <h1 className="text-4xl font-bold mb-4">Let&apos;s Get to know you</h1>
-        <p className="text-[#6B7280] text-lg">Fill in the blanks to proceed!</p>
+        <h1 className="text-4xl font-bold mb-4">{t("header")}</h1>
+        <p className="text-[#6B7280] text-lg">{t("sub_header")}</p>
       </div>
 
       {/* Stepper */}
@@ -225,8 +237,17 @@ const MultistepForm = () => {
                 onClick={handleNextStep}
                 className="w-full text-base text-white bg-[#B5BE34] hover:bg-[#aab239] flex items-center justify-center py-2 px-4 rounded"
               >
-                Next
-                <BsArrowRight className="w-4 h-4 ml-2" />
+                {locale === "en" ? (
+                  <>
+                    {t("next")}
+                    <BsArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                ) : (
+                  <>
+                    {t("next")}
+                    <BsArrowLeft className="w-4 h-4 mr-2" />
+                  </>
+                )}
               </button>
             ) : (
               <Button
@@ -234,7 +255,7 @@ const MultistepForm = () => {
                 size="lg"
                 className="w-full px-6 py-2 bg-[#B5BE34] text-white rounded hover:bg-[#aab239]"
               >
-                Submit
+                {t("submit")}
               </Button>
             )}
           </div>
