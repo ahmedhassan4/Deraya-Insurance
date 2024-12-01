@@ -3,7 +3,7 @@ import "../globals.css";
 import GlobalModal from "@/components/modal-views/container";
 
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,8 +18,11 @@ export default async function RootLayout({
   params: { locale: string };
 }>) {
   const messages = await getMessages();
+  console.log("local form main", locale);
+
+  const localeLang = await getLocale();
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={localeLang === "ar" ? "rtl" : "ltr"}>
       <body>
         <GlobalModal />
         <NextIntlClientProvider messages={messages}>

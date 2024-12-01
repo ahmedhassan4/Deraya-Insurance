@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,15 +15,24 @@
     --foreground: #ededed;
   }
 }
-html{
+
+
+html {
   font-family: "Inter", sans-serif;
+  direction: ltr;
+}
+
+html[dir="rtl"] {
+  font-family: "Almarai", sans-serif !important;;
+  direction: rtl; 
+  text-align: right;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Inter", sans-serif;
 }
+
 
 .embla {
   max-width: 44rem;

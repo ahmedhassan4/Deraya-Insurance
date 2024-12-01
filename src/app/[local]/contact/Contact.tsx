@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import SubmitModal from "./SubmitModal";
 import useModal from "@/components/modal-views/use-madal";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -34,6 +36,10 @@ function Contact() {
     },
   });
 
+  const t = useTranslations("Form");
+  const locale = useLocale();
+  console.log("local lang", locale);
+
   const { openModal, closeModal } = useModal();
 
   const onSubmit = (data: ContactFormProps) => {
@@ -45,7 +51,7 @@ function Contact() {
   };
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden ">
       <Link href="/services">
         <Button
           variant="text"
@@ -58,8 +64,20 @@ function Contact() {
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-6">
-        <Text className="text-2xl font-bold mb-1">Let’s Get to know you</Text>
-        <Text className="text-[#6B7280] ">Fill in the blanks to proceed!</Text>
+        <Text
+          className={`text-2xl font-bold mb-1 ${
+            locale === "ar" && "text-right font-arabic"
+          }`}
+        >
+          {t("header")}
+        </Text>
+        <Text
+          className={`text-[#6B7280] ${
+            locale === "ar" && "text-right font-arabic"
+          }`}
+        >
+          {t("sub_header")}
+        </Text>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -67,8 +85,8 @@ function Contact() {
           <Input
             type="text"
             size="lg"
-            label="Full Name"
-            placeholder="Enter your full name"
+            label={t("name.label")}
+            placeholder={t("name.placeholder")}
             {...register("name")}
             error={errors.name?.message}
           />

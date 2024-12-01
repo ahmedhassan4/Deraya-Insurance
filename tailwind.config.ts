@@ -56,6 +56,16 @@ export default {
           dark: colors.emerald[700],
         },
       },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        arabic: ["Almarai", "sans-serif"],
+      },
+    },
+  },
+  variants: {
+    extend: {
+      textAlign: ["rtl"],
+      fontFamily: ["rtl"],
     },
   },
   plugins: [forms],
