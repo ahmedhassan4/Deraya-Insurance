@@ -32,6 +32,10 @@
       "email": "Invalid email address",
       "phone": "Invalid phone number"
     }
+  },
+  "services": {
+    "title": "Select your Service",
+    "desc": "We specialize in curating personalized insurance solutions that meet your specific needs. Whether you're looking for medical, life, or general coverage, our expert team ensures you get the best, most affordable packages available."
   }
 }
 
