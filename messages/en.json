@@ -6,26 +6,33 @@
   "Form": {
     "header": "Let’s Get to know you",
     "sub_header": "Fill in the blanks to proceed!",
-    "fields": {
-      "name": {
-        "label": "Full Name",
-        "placeholder": "Enter your full name"
-      },
-      "email": {
-        "label": "Email Address",
-        "placeholder": "Enter your email"
-      },
-      "phone": {
-        "label": "Phone Number",
-        "placeholder": "Enter your phone number"
-      },
-      "fra_broker": {
-        "label": "Are you an FRA registered broker?",
-        "options": {
-          "yes": "Yes",
-          "no": "No"
-        }
+    "name": {
+      "label": "Full Name",
+      "placeholder": "Enter your full name"
+    },
+    "email": {
+      "label": "Email Address",
+      "placeholder": "Enter your email"
+    },
+    "phone": {
+      "label": "Phone Number",
+      "placeholder": "Enter your phone number"
+    },
+    "fra_broker": {
+      "label": "Are you an FRA registered broker?",
+      "options": {
+        "yes": "Yes",
+        "no": "No"
       }
+    },
+    "submit": "Submit",
+    "back": "Back",
+    "errors": {
+      "name": "Name must be at least 2 characters",
+      "email": "Invalid email address",
+      "phone": "Invalid phone number"
     }
   }
 }
+
+

@@ -9,21 +9,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import SubmitModal from "./SubmitModal";
 import useModal from "@/components/modal-views/use-madal";
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
-
-const contactFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z.string().email({ message: "Invalid email address" }),
-  phone: z.string().regex(/^^(\+?\d{1,4})?\s?(\(?\d{1,4}\)?)?\s?\d{4,10}$/, {
-    message: "Invalid phone number",
-  }),
-  registered: z.boolean(),
-});
-
-type ContactFormProps = z.infer<typeof contactFormSchema>;
+import { useLocale, useTranslations } from "next-intl";
 
 function Contact() {
+  const t = useTranslations("Form");
+
+  const contactFormSchema = z.object({
+    name: z.string().min(2, { message: t("errors.name") }),
+    email: z.string().email({ message: t("errors.email") }),
+    phone: z.string().regex(/^^(\+?\d{1,4})?\s?(\(?\d{1,4}\)?)?\s?\d{4,10}$/, {
+      message: t("errors.phone"),
+    }),
+    registered: z.boolean(),
+  });
+
+  type ContactFormProps = z.infer<typeof contactFormSchema>;
+
   const {
     register,
     control,
@@ -36,9 +37,7 @@ function Contact() {
     },
   });
 
-  const t = useTranslations("Form");
   const locale = useLocale();
-  console.log("local lang", locale);
 
   const { openModal, closeModal } = useModal();
 
@@ -51,33 +50,23 @@ function Contact() {
   };
 
   return (
-    <div className="w-full h-full overflow-hidden ">
+    <div className="w-full h-full overflow-hidden">
       <Link href="/services">
         <Button
           variant="text"
-          className="text-[#111928] font-normal text-lg flex items-center"
+          className={`text-[#111928] font-normal text-lg flex items-center ${
+            locale === "ar" ? "flex-row-reverse" : "flex-row"
+          }`}
         >
-          <BsArrowLeft className="w-5 h-5 mr-2" />
-          Back
+          <BsArrowLeft className="w-5 h-5 mx-2" />
+          {t("back")}
         </Button>
       </Link>
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-6">
-        <Text
-          className={`text-2xl font-bold mb-1 ${
-            locale === "ar" && "text-right font-arabic"
-          }`}
-        >
-          {t("header")}
-        </Text>
-        <Text
-          className={`text-[#6B7280] ${
-            locale === "ar" && "text-right font-arabic"
-          }`}
-        >
-          {t("sub_header")}
-        </Text>
+        <Text className="text-2xl font-bold mb-1">{t("header")}</Text>
+        <Text className="text-[#6B7280] ">{t("sub_header")}</Text>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -96,8 +85,8 @@ function Contact() {
           <Input
             type="email"
             size="lg"
-            label="Email Address"
-            placeholder="Enter your email"
+            label={t("email.label")}
+            placeholder={t("email.label")}
             {...register("email")}
             error={errors.email?.message}
           />
@@ -107,8 +96,8 @@ function Contact() {
           <Input
             type="tel"
             size="lg"
-            label="Phone Number"
-            placeholder="Enter your phone number"
+            label={t("phone.label")}
+            placeholder={t("phone.label")}
             {...register("phone")}
             error={errors.phone?.message}
           />
@@ -116,7 +105,7 @@ function Contact() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 ">
-            Are you an FRA registered broker?
+            {t("fra_broker.label")}
           </label>
           <Controller
             name="registered"
@@ -125,7 +114,7 @@ function Contact() {
               <div className="flex w-full gap-4">
                 <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full ">
                   <Radio
-                    label="Yes"
+                    label={t("fra_broker.options.yes")}
                     value="true"
                     checked={field.value === true}
                     onChange={() => field.onChange(true)}
@@ -133,7 +122,7 @@ function Contact() {
                 </div>
                 <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full ">
                   <Radio
-                    label="No"
+                    label={t("fra_broker.options.no")}
                     value="false"
                     checked={field.value === false}
                     onChange={() => field.onChange(false)}
@@ -149,7 +138,7 @@ function Contact() {
           color="primary"
           className="w-full hover:bg-[#aab239]"
         >
-          Submit
+          {t("submit")}
         </Button>
       </form>
     </div>
