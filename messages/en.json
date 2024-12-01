@@ -47,8 +47,23 @@
     "name": "Full Name",
     "email": "Email Address",
     "phone": "Phone Number",
+    "interested_in": "I'm interested in",
+    "interest": {
+      "Inpatient": "Inpatient",
+      "Inpatient_Outpatient": "Inpatient & Outpatient"
+    },
+    "date": "Date of Birth",
+    "country": "Country of Residence",
+
     "fra_broker": "Are you an FRA registered broker?",
     "submit": "Submit",
+    "placeholder": {
+      "name": "Enter your full name",
+      "email": "Enter your email",
+      "phone": "Enter your phone number",
+      "date": "Select your date of birth",
+      "country": "Select your country of residence"
+    },
     "errors": {
       "name": "Name must be at least 2 characters",
       "email": "Invalid email address",

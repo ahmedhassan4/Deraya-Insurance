@@ -15,20 +15,21 @@ import {
 } from "@/components/ui/popover";
 
 import ReactFlagsSelect from "react-flags-select";
+import { useTranslations } from "next-intl";
 
 export const NameField = () => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
-
+  const t = useTranslations("subscription");
   return (
     <div className="space-y-4">
       <div>
         <Input
-          label="Name"
+          label={t("name")}
           size="lg"
-          placeholder="Enter your first name"
+          placeholder={t("placeholder.name")}
           {...register("name")}
         />
         {errors.name?.message && (
@@ -46,15 +47,15 @@ export const EmailField = () => {
     register,
     formState: { errors },
   } = useFormContext();
-
+  const t = useTranslations("subscription");
   return (
     <div className="space-y-4">
       <div>
         <Input
-          label="Email"
+          label={t("email")}
           type="email"
           size="lg"
-          placeholder="Enter your email"
+          placeholder={t("placeholder.email")}
           {...register("email")}
         />
         {errors.email?.message && (
@@ -72,15 +73,15 @@ export const PhoneField = () => {
     register,
     formState: { errors },
   } = useFormContext();
-
+  const t = useTranslations("subscription");
   return (
     <div className="space-y-4">
       <div>
         <Input
-          label="Phone"
+          label={t("phone")}
           type="tel"
           size="lg"
-          placeholder="Enter your phone number"
+          placeholder={t("placeholder.phone")}
           {...register("phone")}
         />
         {errors.phone?.message && (
@@ -98,12 +99,12 @@ export const InterestedInField = () => {
     control,
     formState: { errors },
   } = useFormContext();
-
+  const t = useTranslations("subscription");
   return (
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          I&apos;m interested in:
+          {t("interested_in")}
         </label>
         <Controller
           name="interestedIn"
@@ -113,7 +114,7 @@ export const InterestedInField = () => {
               <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5">
                 <Radio
                   {...field}
-                  label="Inpatient"
+                  label={t("interest.Inpatient")}
                   value="Inpatient"
                   checked={field.value === "Inpatient"}
                 />
@@ -121,7 +122,7 @@ export const InterestedInField = () => {
               <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-2">
                 <Radio
                   {...field}
-                  label="Inpatient & Outpatient"
+                  label={t("interest.Inpatient_Outpatient")}
                   value="InpatientAndOutpatient"
                   checked={field.value === "InpatientAndOutpatient"}
                 />
@@ -146,12 +147,12 @@ export const DateField = () => {
     setValue,
     formState: { errors },
   } = useFormContext();
-
+  const t = useTranslations("subscription");
   const [date, setDate] = useState<Date | undefined>(undefined);
   return (
     <div className="mt-4 mb-2">
       <label className="block mb-1.5 text-sm font-medium text-gray-700">
-        Date of Birth
+        {t("date")}
       </label>
       <Popover>
         <PopoverTrigger asChild>
@@ -165,7 +166,7 @@ export const DateField = () => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {date ? format(date, "PPP") : <span>{t("placeholder.date")}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
@@ -197,11 +198,11 @@ export const CountryField = () => {
     formState: { errors },
   } = useFormContext();
   const [selected, setSelected] = useState("");
-
+  const t = useTranslations("subscription");
   return (
     <div>
       <label className="block mb-1.5 text-sm font-medium text-gray-700">
-        Country of residence
+        {t("country")}
       </label>
       <ReactFlagsSelect
         selected={selected}
@@ -209,7 +210,7 @@ export const CountryField = () => {
           setSelected(code);
           setValue("country", code);
         }}
-        placeholder="Select Country"
+        placeholder={t("placeholder.country")}
         searchable
         searchPlaceholder="Search countries"
       />
