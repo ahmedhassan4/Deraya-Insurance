@@ -43,7 +43,7 @@ const CardInfo: React.FC<CardInfoProps> = ({
     },
     {
       value: "ar",
-      label: "اللغة العربية",
+      label: "العربية",
     },
   ];
 
