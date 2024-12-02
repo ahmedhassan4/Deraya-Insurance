@@ -65,9 +65,15 @@
       "country": "Select your country of residence"
     },
     "errors": {
-      "name": "Name must be at least 2 characters",
+      "name": {
+        "min": "Name must be at least 2 characters",
+        "empty": "Please enter your name"
+      },
       "email": "Invalid email address",
-      "phone": "Invalid phone number"
+      "phone": "Invalid phone number",
+      "date": "Please select your date of birth",
+      "country": "Please select your country of residence",
+      "interested_in": "Please select your interest"
     }
   }
 }

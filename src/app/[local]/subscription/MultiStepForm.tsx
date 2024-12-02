@@ -14,10 +14,11 @@ import { Button } from "rizzui";
 import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import Line from "@/ui/Line";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormData, subscriptionSchema } from "./subscription.schema";
+import { FormData, useSubscriptionSchema } from "./subscription.schema";
 import { useLocale, useTranslations } from "next-intl";
 
 const MultistepForm = () => {
+  const subscriptionSchema = useSubscriptionSchema();
   const methods = useForm<FormData>({
     mode: "onChange",
     resolver: zodResolver(subscriptionSchema),
