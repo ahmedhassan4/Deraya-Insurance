@@ -3,6 +3,7 @@ import React from "react";
 import Service from "./Service";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useLocale } from "next-intl";
 // import Loading from "@/app/loading";
 
 interface ServiceData {
@@ -15,11 +16,17 @@ interface ServiceData {
 }
 
 function Services() {
+  const locale = useLocale();
   const { data, isError, error } = useQuery({
-    queryKey: ["services"],
+    queryKey: ["services", locale],
     queryFn: async () => {
       const { data } = await axios.get(
-        "https://insurance.incodehub.com/api/v2/services"
+        "https://insurance.incodehub.com/api/v2/services",
+        {
+          headers: {
+            "X-LOCALE": locale,
+          },
+        }
       );
       return data;
     },

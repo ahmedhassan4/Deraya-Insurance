@@ -74,7 +74,8 @@
       "date": "Please select your date of birth",
       "country": "Please select your country of residence",
       "interested_in": "Please select your interest"
-    }
+    },
+    "compare_prices": "Compare Prices"
   }
 }
 
