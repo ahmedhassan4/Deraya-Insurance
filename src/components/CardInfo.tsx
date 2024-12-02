@@ -2,11 +2,13 @@
 import { CardInfoProps } from "@/types/cardInfo";
 import Line from "@/ui/Line";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { PiInstagramLogo } from "react-icons/pi";
 // import DropdownAction from "./charts/dropdown-action";
 import { Select } from "rizzui";
+import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
 const socialLinks = [
   {
@@ -27,25 +29,42 @@ const socialLinks = [
   },
 ];
 
-const options = [
-  {
-    value: "english",
-    label: "English",
-  },
-  {
-    value: "arabic",
-    label: "Arabic",
-  },
-];
-
 const CardInfo: React.FC<CardInfoProps> = ({
   children,
   displaySocialIcons = true,
 }) => {
-  // function handleChange(viewType: string) {
-  //   console.log("viewType", viewType);
-  // }
-  const [value, setValue] = useState("English");
+  const pathname = usePathname();
+  const currentLocale = useLocale();
+
+  const options = [
+    {
+      value: "en",
+      label: "English",
+    },
+    {
+      value: "ar",
+      label: "Arabic",
+    },
+  ];
+
+  const handleLanguageChange = (selectedOption: {
+    value: string;
+    label: string;
+  }) => {
+    const newLocale = selectedOption.value;
+
+    const cleanPathname = pathname
+      .replace(/^\/[a-z]{2}/, "")
+      .replace(/^\//, "");
+
+    const newPath = `/${newLocale}/${cleanPathname}`;
+
+    window.location.href = newPath;
+  };
+
+  const currentLocaleOption =
+    options.find((option) => option.value === currentLocale) || options[0];
+
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <div>
@@ -65,8 +84,8 @@ const CardInfo: React.FC<CardInfoProps> = ({
           <div className="h-6 w-px bg-gray-300"></div>
           <Select
             options={options}
-            value={value}
-            onChange={setValue}
+            value={currentLocaleOption}
+            onChange={handleLanguageChange}
             className="w-28 border border-white rounded-lg hover:border-white hover:rounded-lg  text-white"
           />
         </div>
