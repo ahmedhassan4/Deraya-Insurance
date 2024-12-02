@@ -1,38 +1,39 @@
+"use client";
 import React from "react";
 import Service from "./Service";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+// import Loading from "@/app/loading";
 
-const services = [
-  {
-    name: "International Medical Insurance",
-    image: "/International.svg",
-  },
-  {
-    name: "Domestic Medical Insurance",
-    image: "/Domestic.svg",
-  },
-  {
-    name: "Car Insurance",
-    image: "/car.svg",
-  },
-  {
-    name: "Employees’ Medical Insurance",
-    image: "/Employees.svg",
-  },
-  {
-    name: "General Insurance",
-    image: "/General.svg",
-  },
-  {
-    name: "Life and Investment plans",
-    image: "/Investment.svg",
-  },
-];
+interface ServiceData {
+  id: number;
+  title: string;
+  inner_title: string;
+  desc: string;
+  image: string;
+  bullet_points: string[];
+}
+
 function Services() {
+  const { data, isError, error } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        "https://insurance.incodehub.com/api/v2/services"
+      );
+      return data;
+    },
+  });
+
+  if (isError) return <div>Error: {error.message}</div>;
+
+  console.log("data fetching from the backend", data?.data);
+
   return (
     <section className="h-full w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 h-full">
-        {services.map((service) => (
-          <Service key={service.name} service={service} />
+        {data?.data?.map((service: ServiceData) => (
+          <Service key={service.id} service={service} />
         ))}
       </div>
     </section>
