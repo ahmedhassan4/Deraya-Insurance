@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 
-export const useSubscriptionSchema = () => {
+export const useSubscriptionSchema = (hiddenInput: boolean = false) => {
   const t = useTranslations("subscription");
 
-  const subscriptionSchema = z.object({
+  let subscriptionSchema = z.object({
     name: z
       .string()
       .min(2, { message: t("errors.name.min") })
@@ -17,18 +17,23 @@ export const useSubscriptionSchema = () => {
       .string()
       .regex(/^\+?[\d\s-]{10,}$/, { message: t("errors.phone") })
       .nonempty({ message: t("errors.phone") }),
-    interestedIn: z.enum(["Inpatient", "InpatientAndOutpatient"], {
-      required_error: t("errors.interested_in"),
-    }),
-    date: z
-      .date({
-        required_error: t("errors.date"),
-        invalid_type_error: t("errors.date"),
-      })
-      .nullable()
-      .refine((val) => val !== null, { message: t("errors.date") }),
-    country: z.string().nonempty({ message: t("errors.country") }),
   });
+
+  if (hiddenInput) {
+    subscriptionSchema = subscriptionSchema.extend({
+      interestedIn: z.enum(["Inpatient", "InpatientAndOutpatient"], {
+        required_error: t("errors.interested_in"),
+      }),
+      date: z
+        .date({
+          required_error: t("errors.date"),
+          invalid_type_error: t("errors.date"),
+        })
+        .nullable()
+        .refine((val) => val !== null, { message: t("errors.date") }),
+      country: z.string().nonempty({ message: t("errors.country") }),
+    });
+  }
 
   return subscriptionSchema;
 };

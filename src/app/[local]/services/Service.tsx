@@ -12,6 +12,7 @@ interface ServiceProps {
     desc: string;
     image: string;
     bullet_points: string[];
+    hiddenInput?: boolean;
   };
 }
 function Service({ service }: ServiceProps) {
@@ -19,7 +20,9 @@ function Service({ service }: ServiceProps) {
 
   const locale = useLocale();
   const handleClick = () => {
-    router.push(`/${locale}/subscription?service_id=${service.id}`);
+    router.push(
+      `/${locale}/subscription?service_id=${service.id}&full_steps=${service.hiddenInput}`
+    );
   };
 
   return (

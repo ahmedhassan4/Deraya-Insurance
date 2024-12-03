@@ -9,7 +9,7 @@ import {
   DateField,
   CountryField,
 } from "./Form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "rizzui";
 import { BsArrowLeft, BsArrowRight, BsCheck } from "react-icons/bs";
 import Line from "@/ui/Line";
@@ -18,18 +18,29 @@ import { FormData, useSubscriptionSchema } from "./subscription.schema";
 import { useLocale, useTranslations } from "next-intl";
 
 const MultistepForm = () => {
-  const subscriptionSchema = useSubscriptionSchema();
+  const searchParams = useSearchParams();
+  const hiddenInputParam = searchParams.get("full_steps");
+  const hiddenInput = hiddenInputParam === "true";
+
+  const subscriptionSchema = useSubscriptionSchema(hiddenInput);
+
   const methods = useForm<FormData>({
     mode: "onChange",
     resolver: zodResolver(subscriptionSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      interestedIn: "Inpatient",
-      date: undefined,
-      country: "",
-    },
+    defaultValues: hiddenInput
+      ? {
+          name: "",
+          email: "",
+          phone: "",
+          interestedIn: "Inpatient",
+          date: undefined,
+          country: "",
+        }
+      : {
+          name: "",
+          email: "",
+          phone: "",
+        },
   });
 
   const t = useTranslations("subscription");
@@ -38,63 +49,92 @@ const MultistepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = React.useState<number[]>([]);
 
-  const formSteps = [
-    {
-      title: "NameField",
-      component: (
-        <div className="space-y-4">
-          <NameField />
-        </div>
-      ),
-      fields: ["name"],
-    },
-    {
-      title: "EmailField",
-      component: (
-        <div className="space-y-4">
-          <EmailField />
-        </div>
-      ),
-      fields: ["email"],
-    },
-    {
-      title: "PhoneField",
-      component: (
-        <div className="space-y-4">
-          <PhoneField />
-        </div>
-      ),
-      fields: ["phone"],
-    },
-    {
-      title: "DateField",
-      component: (
-        <div className="space-y-4">
-          <DateField />
-        </div>
-      ),
-      fields: ["date"],
-    },
-    {
-      title: "CountryField",
-      component: (
-        <div className="space-y-4">
-          <CountryField />
-        </div>
-      ),
-      fields: ["country"],
-    },
-
-    {
-      title: "InterestedInField",
-      component: (
-        <div className="space-y-4">
-          <InterestedInField />
-        </div>
-      ),
-      fields: ["interestedIn"],
-    },
-  ];
+  const formSteps = hiddenInput
+    ? [
+        {
+          title: "NameField",
+          component: (
+            <div className="space-y-4">
+              <NameField />
+            </div>
+          ),
+          fields: ["name"],
+        },
+        {
+          title: "EmailField",
+          component: (
+            <div className="space-y-4">
+              <EmailField />
+            </div>
+          ),
+          fields: ["email"],
+        },
+        {
+          title: "PhoneField",
+          component: (
+            <div className="space-y-4">
+              <PhoneField />
+            </div>
+          ),
+          fields: ["phone"],
+        },
+        {
+          title: "DateField",
+          component: (
+            <div className="space-y-4">
+              <DateField />
+            </div>
+          ),
+          fields: ["date"],
+        },
+        {
+          title: "CountryField",
+          component: (
+            <div className="space-y-4">
+              <CountryField />
+            </div>
+          ),
+          fields: ["country"],
+        },
+        {
+          title: "InterestedInField",
+          component: (
+            <div className="space-y-4">
+              <InterestedInField />
+            </div>
+          ),
+          fields: ["interestedIn"],
+        },
+      ]
+    : [
+        {
+          title: "NameField",
+          component: (
+            <div className="space-y-4">
+              <NameField />
+            </div>
+          ),
+          fields: ["name"],
+        },
+        {
+          title: "EmailField",
+          component: (
+            <div className="space-y-4">
+              <EmailField />
+            </div>
+          ),
+          fields: ["email"],
+        },
+        {
+          title: "PhoneField",
+          component: (
+            <div className="space-y-4">
+              <PhoneField />
+            </div>
+          ),
+          fields: ["phone"],
+        },
+      ];
 
   const validateStep = async () => {
     const currentStepFields = formSteps[currentStep]
