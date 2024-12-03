@@ -20,9 +20,7 @@ function Service({ service }: ServiceProps) {
 
   const locale = useLocale();
   const handleClick = () => {
-    router.push(
-      `/${locale}/subscription?service_id=${service.id}&full_steps=${service.hiddenInput}`
-    );
+    router.push(`/${locale}/subscription?service_id=${service.id}`);
   };
 
   return (

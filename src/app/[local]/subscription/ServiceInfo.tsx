@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { Text } from "rizzui";
+import LoadingSpinner from "../spinner";
 
 interface ServiceProps {
   id: number;
@@ -40,7 +41,12 @@ function ServiceInfo() {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
   const service = services?.data.find(
     (s: ServiceProps) => s.id === Number(serviceId)
