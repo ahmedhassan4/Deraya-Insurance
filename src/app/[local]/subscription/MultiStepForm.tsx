@@ -231,6 +231,9 @@ const MultistepForm = () => {
     });
   }, [serviceFields]);
 
+
+  console.log("form steps", formSteps);
+
   // Validate the current step
   const validateStep = async () => {
     const currentStepFields = formSteps[currentStep]?.fields || [];
