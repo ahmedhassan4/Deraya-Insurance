@@ -274,7 +274,7 @@ const MultistepForm = () => {
   // Handle form submission
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
-    router.push("/plan");
+    router.push(`/${locale}/plan`);
   };
 
   return (
