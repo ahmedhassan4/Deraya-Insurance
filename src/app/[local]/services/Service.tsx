@@ -2,29 +2,23 @@
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ServiceType } from "@/types/service.type";
 import React from "react";
 
 interface ServiceProps {
-  service: {
-    id: number;
-    title: string;
-    inner_title: string;
-    desc: string;
-    image: string;
-    bullet_points: string[];
-    hiddenInput?: boolean;
-  };
+  service: ServiceType;
 }
-function Service({ service }: ServiceProps) {
-  const router = useRouter();
 
+const Service: React.FC<ServiceProps> = ({ service }) => {
+  const router = useRouter();
   const locale = useLocale();
+
   const handleClick = () => {
     router.push(`/${locale}/subscription?service_id=${service.id}`);
   };
 
   return (
-    <div className="group cursor-pointer" onClick={handleClick}>
+    <div className="group cursor-pointer" onClick={handleClick} role="button">
       <div className=" rounded-lg sm:rounded-xl h-full w-full p-3 sm:p-4 lg:p-3 xl:p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col  border border-gray-100 hover:border-[#B5BE34]">
         <div className="relative flex items-center justify-center mb-2 sm:mb-3">
           <Image
@@ -45,6 +39,6 @@ function Service({ service }: ServiceProps) {
       </div>
     </div>
   );
-}
+};
 
 export default Service;
