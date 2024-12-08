@@ -60,6 +60,10 @@ export default {
         sans: ["Inter", "sans-serif"],
         arabic: ["Almarai", "sans-serif"],
       },
+      boxShadow: {
+        cards: "0 1px 3px rgba(0, 0, 0, 0.1)",
+        contaienr: "0 0px 20px rgba(0, 0, 0, 0.1)",
+      },
     },
   },
   variants: {

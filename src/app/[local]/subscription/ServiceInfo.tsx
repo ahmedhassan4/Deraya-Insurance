@@ -1,35 +1,48 @@
+"use client";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { Text } from "rizzui";
-
-const servicesDetailes = {
-  name: "International Medical Insurance",
-  image: "/service.svg",
-  discrtiption: [
-    "Eligible medical treatment at home and abroad.",
-    "Annual limits starting from $1m.",
-    "Comprehensive range of health plans available to suit your specific needs and budget.",
-    "Full cover for eligible cancer treatment.",
-    "Access to a second medical opinion at no extra cost.",
-    "Your choice of doctors and hospitals.",
-  ],
-};
+import LoadingSpinner from "../spinner";
+import { useServiceData } from "@/hooks/useServiceData";
+import { ServiceType } from "@/types/service.type";
 
 function ServiceInfo() {
+  const t = useTranslations("subscription");
+  const searchParams = useSearchParams();
+  const serviceId = searchParams.get("service_id");
+
+  const { data, isLoading } = useServiceData();
+
+  console.log("is loading", isLoading);
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+
+  const service = data?.find((s: ServiceType) => s.id === Number(serviceId));
+
+  if (!service) {
+    return <Text className="text-red-500">Service not found</Text>;
+  }
+
   return (
     <div>
       <Image
-        src={servicesDetailes.image}
-        alt={servicesDetailes.name}
+        src={service.inner_image}
+        alt={service.title}
         width={100}
         height={100}
       ></Image>
 
-      <Text className="text-white text-3xl mt-5">{servicesDetailes.name}</Text>
+      <Text className="text-white text-3xl mt-5">{service.title}</Text>
 
       <div className="mt-5">
-        {servicesDetailes.discrtiption.map((detailes, index) => (
+        {service.bullet_points.map((detailes: string, index: number) => (
           <div key={index} className="flex items-start gap-2 mt-1">
             <IoCheckmarkCircleSharp color="white" className="flex-0" />
             <Text className="text-white text-sm  font-medium flex-1">
@@ -40,7 +53,7 @@ function ServiceInfo() {
       </div>
 
       <Text className="text-white mt-5 font-semibold italic">
-        Compare prices
+        {t("compare_prices")}
       </Text>
     </div>
   );
