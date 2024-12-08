@@ -12,7 +12,11 @@ export const serviceApi = async (locale: string): Promise<ServiceResponse> => {
       }
     );
     return response.data;
-  } catch (error: any) {
-    throw new Error("Faild To Fetch Service : " + error.message);
+  } catch (error){
+    if (error instanceof Error) {
+      throw new Error("Faild To Fetch Service : " + error.message);
+    } else {
+      throw new Error("Faild To Fetch Service");
+    }
   }
 };
