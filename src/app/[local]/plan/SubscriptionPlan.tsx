@@ -1,11 +1,9 @@
 import Line from "@/ui/Line";
 import React from "react";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-import { Button, Text } from "rizzui";
+import { Text } from "rizzui";
 import EmblaCarousel from "./Plans";
 import { EmblaOptionsType } from "embla-carousel";
-import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import NavigationButton from "@/components/NavigationButton";
 
 const OPTIONS: EmblaOptionsType = { slidesToScroll: "auto" };
@@ -82,7 +80,6 @@ const plans = [
 
 function SubscriptionPlan() {
   const t = useTranslations("plan");
-  const locale = useLocale();
   return (
     <div className="w-full h-full overflow-hidden">
       <NavigationButton title="back_to_services" url="services" />

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import GlobalModal from "@/components/modal-views/container";
 
-import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
-import Providers from "./providers";
+import ClientProvider from "./ClientProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,23 +12,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
 }>) {
   const messages = await getMessages();
-  console.log("local form main", locale);
-
   const localeLang = await getLocale();
+
   return (
-    <html lang={locale} dir={localeLang === "ar" ? "rtl" : "ltr"}>
-      <body>
-        <GlobalModal />
-        <NextIntlClientProvider messages={messages}>
-          <Providers>{children}</Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <ClientProvider messages={messages} localeLang={localeLang}>
+      {children}
+    </ClientProvider>
   );
 }
