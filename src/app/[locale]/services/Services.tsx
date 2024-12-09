@@ -3,11 +3,15 @@ import React from "react";
 import { ServiceType } from "@/types/service.type";
 import Service from "./Service";
 import { useServiceData } from "@/hooks/useServiceData";
+import Spinner from "../spinner";
 
 function Services() {
-  const { isError, data, error } = useServiceData();
+  const { isError, data, error, isLoading } = useServiceData();
 
   if (isError) return <div>Error: {error?.message}</div>;
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   console.log("data fetching from the backend", data);
 
