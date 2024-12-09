@@ -13,18 +13,18 @@ import { useLocale } from "next-intl";
 const socialLinks = [
   {
     title: "Facebook",
-    link: "https://www.facebook.com",
+    link: "https://www.facebook.com/DerayaInsurancebrokerage",
     icon: <FaFacebookF className="h-auto w-5 text-white" />,
   },
 
   {
     title: "Instagram",
-    link: "https://www.instagram.com",
+    link: "https://www.instagram.com/derayainsurancebrokerage",
     icon: <PiInstagramLogo className="h-auto w-5 text-white" />,
   },
   {
     title: "Linkedin",
-    link: "https://www.linkedin.com",
+    link: "https://www.linkedin.com/company/deraya-insurance/",
     icon: <FaLinkedinIn className="h-auto w-5 text-white" />,
   },
 ];

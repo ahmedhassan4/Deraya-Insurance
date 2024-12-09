@@ -1,9 +1,12 @@
 import Line from "@/ui/Line";
 import React from "react";
-import { BsArrowLeft } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { Button, Text } from "rizzui";
 import EmblaCarousel from "./Plans";
 import { EmblaOptionsType } from "embla-carousel";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import NavigationButton from "@/components/NavigationButton";
 
 const OPTIONS: EmblaOptionsType = { slidesToScroll: "auto" };
 // const SLIDE_COUNT = 8;
@@ -78,24 +81,16 @@ const plans = [
 ];
 
 function SubscriptionPlan() {
+  const t = useTranslations("plan");
+  const locale = useLocale();
   return (
     <div className="w-full h-full overflow-hidden">
-      {/* <Link href="/services"> */}
-      <Button
-        variant="text"
-        className="text-[#111928] font-normal text-lg flex items-center"
-      >
-        <BsArrowLeft className="w-5 h-5 mr-2" />
-        Back To Services
-      </Button>
-      {/* </Link> */}
+      <NavigationButton title="back_to_services" url="services" />
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-6">
-        <Text className="text-2xl font-bold mb-1">Thanks for Submitting</Text>
-        <Text className="text-[#6B7280] ">
-          Our team will contact you within 24 hours
-        </Text>
+        <Text className="text-2xl font-bold mb-1">{t("thanks")}</Text>
+        <Text className="text-[#6B7280] ">{t("message")}</Text>
       </div>
 
       <div className="plans">

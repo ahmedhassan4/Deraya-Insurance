@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { EmblaCarouselType } from "embla-carousel";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useLocale } from "next-intl";
 
 type UsePrevNextButtonsType = {
   prevBtnDisabled: boolean;
@@ -55,14 +56,18 @@ type PropType = ComponentPropsWithRef<"button">;
 
 export const PrevButton: React.FC<PropType> = (props) => {
   const { children, ...restProps } = props;
-
+  const locale = useLocale();
   return (
     <button
       className="embla__button embla__button--prev"
       type="button"
       {...restProps}
     >
-      <FaArrowLeft className="text-[#6B7280]" />
+      {locale === "en" ? (
+        <FaArrowLeft className="text-[#6B7280]" />
+      ) : (
+        <FaArrowRight className="text-[#6B7280]" />
+      )}
       {children}
     </button>
   );
@@ -70,14 +75,19 @@ export const PrevButton: React.FC<PropType> = (props) => {
 
 export const NextButton: React.FC<PropType> = (props) => {
   const { children, ...restProps } = props;
-
+  const locale = useLocale();
   return (
     <button
       className="embla__button embla__button--next"
       type="button"
       {...restProps}
     >
-      <FaArrowRight className="text-[#6B7280]" />
+      {locale === "en" ? (
+        <FaArrowRight className="text-[#6B7280]" />
+      ) : (
+        <FaArrowLeft className="text-[#6B7280]" />
+      )}
+
       {children}
     </button>
   );
