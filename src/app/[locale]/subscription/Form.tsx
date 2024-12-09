@@ -56,6 +56,7 @@ export const EmailField = () => {
           label={t("email")}
           type="email"
           size="lg"
+          className="text-black"
           placeholder={t("placeholder.email")}
           {...register("email")}
         />
@@ -82,6 +83,7 @@ export const PhoneField = () => {
           label={t("phone")}
           type="tel"
           size="lg"
+          className="text-black"
           placeholder={t("placeholder.phone")}
           {...register("phone")}
         />
@@ -117,6 +119,7 @@ export const InterestedInField = () => {
                   {...field}
                   label={t("interest.Inpatient")}
                   value="Inpatient"
+                  className="text-black"
                   checked={field.value === "Inpatient"}
                 />
               </div>
@@ -124,6 +127,7 @@ export const InterestedInField = () => {
                 <Radio
                   {...field}
                   label={t("interest.Inpatient_Outpatient")}
+                  className="text-black"
                   value="InpatientAndOutpatient"
                   checked={field.value === "InpatientAndOutpatient"}
                 />
@@ -161,7 +165,7 @@ export const DateField = () => {
             variant="outline"
             size="lg"
             className={cn(
-              "w-full justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal text-black",
               !date && "text-muted-foreground",
               errors.date && "border-destructive"
             )}
