@@ -4,6 +4,8 @@ import { BsArrowLeft } from "react-icons/bs";
 import { Button, Text } from "rizzui";
 import EmblaCarousel from "./Plans";
 import { EmblaOptionsType } from "embla-carousel";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 const OPTIONS: EmblaOptionsType = { slidesToScroll: "auto" };
 // const SLIDE_COUNT = 8;
@@ -78,17 +80,18 @@ const plans = [
 ];
 
 function SubscriptionPlan() {
+  const local = useLocale();
   return (
     <div className="w-full h-full overflow-hidden">
-      {/* <Link href="/services"> */}
-      <Button
-        variant="text"
-        className="text-[#111928] font-normal text-lg flex items-center"
-      >
-        <BsArrowLeft className="w-5 h-5 mr-2" />
-        Back To Services
-      </Button>
-      {/* </Link> */}
+      <Link href={`/${local}/services`}>
+        <Button
+          variant="text"
+          className="text-[#111928] font-normal text-lg flex items-center"
+        >
+          <BsArrowLeft className="w-5 h-5 mr-2" />
+          Back To Services
+        </Button>
+      </Link>
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-6">
