@@ -76,6 +76,11 @@
       "interested_in": "Please select your interest"
     },
     "compare_prices": "Compare Prices"
+  },
+  "plan": {
+    "thanks": "Thanks for Submitting",
+    "message": "Our team will contact you within 24 hours",
+    "back_to_services": "Back to Services"
   }
 }
 
