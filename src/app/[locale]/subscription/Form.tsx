@@ -30,6 +30,7 @@ export const NameField = () => {
           label={t("name")}
           size="lg"
           placeholder={t("placeholder.name")}
+          className="text-black"
           {...register("name")}
         />
         {errors.name?.message && (
