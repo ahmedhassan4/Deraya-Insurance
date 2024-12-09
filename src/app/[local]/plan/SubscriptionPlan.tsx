@@ -6,6 +6,7 @@ import EmblaCarousel from "./Plans";
 import { EmblaOptionsType } from "embla-carousel";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import NavigationButton from "@/components/NavigationButton";
 
 const OPTIONS: EmblaOptionsType = { slidesToScroll: "auto" };
 // const SLIDE_COUNT = 8;
@@ -84,20 +85,7 @@ function SubscriptionPlan() {
   const locale = useLocale();
   return (
     <div className="w-full h-full overflow-hidden">
-      <Link href={`/${locale}/services`}>
-        <Button
-          variant="text"
-          // onClick={handleBackToServices}
-          className="text-[#111928] font-normal text-lg flex items-center"
-        >
-          {locale === "en" ? (
-            <BsArrowLeft className="w-5 h-5 mr-2" />
-          ) : (
-            <BsArrowRight className="w-5 h-5 ml-3" />
-          )}
-          {t("back_to_services")}
-        </Button>
-      </Link>
+      <NavigationButton title="back_to_services" url="services" />
       <Line marginTop="10px" thickness=".5px" />
 
       <div className="my-6">
