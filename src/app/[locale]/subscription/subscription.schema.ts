@@ -1,4 +1,3 @@
-// subscription.schema.ts
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 
@@ -6,7 +5,7 @@ const fieldMapping: { [key: string]: string } = {
   name: "name",
   email: "email",
   phone: "phone",
-  date_of_birth: "date",
+  date_of_birth: "date_of_birth",
   country: "country",
   interested_in: "interestedIn",
 };
@@ -38,7 +37,8 @@ export const useSubscriptionSchema = (fields: string[]) => {
           .regex(/^\+?[\d\s-]{10,}$/, { message: t("errors.phone") })
           .nonempty({ message: t("errors.phone") });
         break;
-      case "date":
+      case "date_of_birth":
+        // Validate as a Date. We'll convert it to string on submit.
         schemaObj[internalField] = z
           .date({
             required_error: t("errors.date"),
@@ -48,9 +48,8 @@ export const useSubscriptionSchema = (fields: string[]) => {
           .refine((val) => val !== null, { message: t("errors.date") });
         break;
       case "country":
-        schemaObj[internalField] = z
-          .string()
-          .nonempty({ message: t("errors.country") });
+        schemaObj[internalField] = z.string({ message: t("errors.country") });
+        // .nonempty({ message: t("errors.country") });
         break;
       case "interestedIn":
         schemaObj[internalField] = z.enum(
@@ -68,12 +67,11 @@ export const useSubscriptionSchema = (fields: string[]) => {
   return z.object(schemaObj);
 };
 
-// Define FormData with all possible fields as optional
 export type FormData = {
   name?: string;
   email?: string;
   phone?: string;
-  date?: Date | null;
+  date_of_birth?: Date | null;
   country?: string;
   interestedIn?: "Inpatient" | "InpatientAndOutpatient";
 };

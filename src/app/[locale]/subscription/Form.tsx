@@ -187,7 +187,7 @@ export function DateField({
         {t("date")}
       </label>
       <Controller
-        name="date"
+        name="date_of_birth"
         control={control}
         render={({ field }) => {
           const { value, onChange } = field;
@@ -239,11 +239,7 @@ export function DateField({
                       </SelectTrigger>
                       <SelectContent>
                         {months.map((month) => (
-                          <SelectItem
-                            key={month}
-                            value={month}
-                            // className="bg-"
-                          >
+                          <SelectItem key={month} value={month}>
                             {month}
                           </SelectItem>
                         ))}
@@ -262,11 +258,7 @@ export function DateField({
                       </SelectTrigger>
                       <SelectContent>
                         {years.map((year) => (
-                          <SelectItem
-                            key={year}
-                            value={year.toString()}
-                            // className="bg-white z-50"
-                          >
+                          <SelectItem key={year} value={year.toString()}>
                             {year}
                           </SelectItem>
                         ))}
@@ -285,9 +277,9 @@ export function DateField({
                   />
                 </PopoverContent>
               </Popover>
-              {errors.date && (
+              {errors.date_of_birth && (
                 <p className=" text-sm mt-2 text-red-500">
-                  {String(errors.date.message)}
+                  {String(errors.date_of_birth.message)}
                 </p>
               )}
             </>

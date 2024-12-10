@@ -1,5 +1,3 @@
-// MultistepForm.tsx
-
 "use client";
 import React, { useMemo, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
@@ -18,26 +16,27 @@ import Line from "@/ui/Line";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormData, useSubscriptionSchema } from "./subscription.schema";
 import { useLocale, useTranslations } from "next-intl";
-import Stepper from "./Stepper"; // Ensure the path is correct
+import Stepper from "./Stepper";
 import { useServiceData } from "@/hooks/useServiceData";
 import Spinner from "../spinner";
+import { useCreateProvider } from "@/hooks/useCreateProvider";
+import { InsuranceOfferRequest } from "@/services/providersApi";
 
-// Mapping from API field names to internal field names (camelCase)
+// Map the API fields to your internal form fields
 const fieldMapping: { [key: string]: string } = {
   name: "name",
   email: "email",
   phone: "phone",
-  date_of_birth: "date",
+  date_of_birth: "date_of_birth",
   country: "country",
   interested_in: "interestedIn",
 };
 
-// Mapping from internal field names to components
 const fieldComponents: { [key: string]: React.ReactElement } = {
   name: <NameField />,
   email: <EmailField />,
   phone: <PhoneField />,
-  date: <DateField />,
+  date_of_birth: <DateField />,
   country: <CountryField />,
   interestedIn: <InterestedInField />,
 };
@@ -62,13 +61,10 @@ const MultistepForm = () => {
     [service]
   );
 
-  // Always call useSubscriptionSchema, even if serviceFields is empty
   const subscriptionSchema = useSubscriptionSchema(serviceFields);
 
-  // Generate default values based on serviceFields
   const defaultValues = useMemo(() => {
     const defaults: Partial<FormData> = {};
-
     serviceFields.forEach((field) => {
       const internalField = fieldMapping[field] || field;
       switch (internalField) {
@@ -78,7 +74,7 @@ const MultistepForm = () => {
         case "country":
           defaults[internalField] = "";
           break;
-        case "date":
+        case "date_of_birth":
           defaults[internalField] = null;
           break;
         case "interestedIn":
@@ -100,12 +96,10 @@ const MultistepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
-  // Generate form steps based on serviceFields
   const formSteps = useMemo(() => {
     return serviceFields.map((field) => {
       const internalField = fieldMapping[field] || field;
       const component = fieldComponents[internalField];
-
       return {
         title: `${
           internalField.charAt(0).toUpperCase() + internalField.slice(1)
@@ -116,15 +110,11 @@ const MultistepForm = () => {
     });
   }, [serviceFields]);
 
-  console.log("form steps", formSteps);
-
-  // Validate the current step
   const validateStep = async () => {
     const currentStepFields = formSteps[currentStep]?.fields || [];
     return methods.trigger(currentStepFields);
   };
 
-  // Handle moving to the next step
   const handleNextStep = async () => {
     const isStepValid = await validateStep();
     if (isStepValid) {
@@ -137,28 +127,62 @@ const MultistepForm = () => {
     }
   };
 
-  // Handle moving to the previous step
   const handlePrevStep = () => {
     setCompletedSteps((prev) => prev.filter((step) => step !== currentStep));
     setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
   };
 
-  // Handle resetting the form
   const handleReset = () => {
     methods.reset(defaultValues);
     setCurrentStep(0);
     setCompletedSteps([]);
   };
 
-  // Handle navigating back to services
   const handleBackToServices = () => {
     router.back();
   };
 
-  // Handle form submission
+  const { mutate } = useCreateProvider();
+
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
-    router.push(`/${locale}/plan?service_id=1`);
+
+    let dateOfBirthStr = "";
+    if (data.date_of_birth instanceof Date) {
+      dateOfBirthStr = data.date_of_birth.toISOString().split("T")[0];
+    }
+
+    let requestData: InsuranceOfferRequest;
+
+    if (serviceId === 1 || serviceId === 8) {
+      requestData = {
+        service_id: serviceId,
+        name: data.name || "",
+        phone: data.phone || "",
+        email: data.email || "",
+        date_of_birth: dateOfBirthStr,
+        country: data.country || "",
+        interested_in: data.interestedIn || "Inpatient",
+      };
+    } else {
+      requestData = {
+        service_id: serviceId || 1,
+        name: data.name || "",
+        phone: data.phone || "",
+        email: data.email || "",
+        // For other services, we do not include date_of_birth, country, interested_in
+      } as InsuranceOfferRequest;
+    }
+
+    mutate(requestData, {
+      onSuccess: (responseData) => {
+        console.log("Insurance offer created successfully:", responseData);
+        router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
+      },
+      onError: (error) => {
+        console.error("Insurance offer creation failed:", error);
+      },
+    });
   };
 
   if (isLoading) {
@@ -169,7 +193,6 @@ const MultistepForm = () => {
     );
   }
 
-  // If no service found after loading, show error
   if (!service) {
     return <div className="text-red-500">{t("service_not_found")}</div>;
   }
