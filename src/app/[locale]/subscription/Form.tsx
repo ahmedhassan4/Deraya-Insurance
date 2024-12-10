@@ -1,21 +1,11 @@
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, Radio } from "rizzui";
-
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
+import DatePicker from "react-datepicker";
 import ReactFlagsSelect from "react-flags-select";
 import { useTranslations } from "next-intl";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export const NameField = () => {
   const {
@@ -143,50 +133,37 @@ export const InterestedInField = () => {
 
 export const DateField = () => {
   const {
-    register,
-    setValue,
+    control,
     formState: { errors },
   } = useFormContext();
   const t = useTranslations("subscription");
-  const [date, setDate] = useState<Date | undefined>(undefined);
+
   return (
     <div className="mt-4 mb-2">
       <label className="block mb-1.5 text-sm font-medium text-gray-700">
         {t("date")}
       </label>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            size="lg"
-            className={cn(
-              "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground",
-              errors.date && "border-destructive"
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>{t("placeholder.date")}</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={(selectedDate) => {
-              setDate(selectedDate);
-              setValue("date", selectedDate);
-            }}
-            initialFocus
+      <Controller
+        name="date"
+        control={control}
+        // You can add validation rules if needed.
+        // For example, if the date is required:
+        // rules={{ required: t("error.required") }}
+        render={({ field }) => (
+          <DatePicker
+            selected={field.value}
+            onChange={(date) => field.onChange(date)}
+            dateFormat="yyyy-MM-dd"
+            className=" border-gray-200 border-2 rounded-md  px-3 py-3 w-full focus:ring-[#B5BE34] focus:border-none"
+            wrapperClassName="!w-full !focus:ring-0 !focus:outline-none "
+            placeholderText={t("placeholder.date")}
           />
-        </PopoverContent>
-      </Popover>
-
-      <input type="hidden" {...register("date")} />
+        )}
+      />
 
       {errors.date && (
-        <p className=" text-sm mt-2 text-red">
-          {errors.date.message as string}
+        <p className="text-sm mt-2 text-red-500">
+          {String(errors.date.message)}
         </p>
       )}
     </div>

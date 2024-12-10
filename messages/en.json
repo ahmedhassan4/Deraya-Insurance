@@ -61,7 +61,7 @@
       "name": "Enter your full name",
       "email": "Enter your email",
       "phone": "Enter your phone number",
-      "date": "Select your date of birth",
+      "date": "YYYY-MM-DD",
       "country": "Select your country of residence"
     },
     "errors": {
