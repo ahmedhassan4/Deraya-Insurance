@@ -6,11 +6,7 @@ import {
 } from "@/services/providersApi";
 
 export const useCreateProvider = () => {
-  return useMutation<
-    InsuranceOfferResponse, // Success type
-    Error, // Error type
-    InsuranceOfferRequest // Variables type
-  >({
+  return useMutation<InsuranceOfferResponse, Error, InsuranceOfferRequest>({
     mutationFn: createInsuranceOffer,
     onSuccess: (data) => {
       console.log("Insurance offer created successfully:", data);

@@ -62,7 +62,7 @@
       "email": "Enter your email",
       "phone": "Enter your phone number",
       "date": "Select your date of birth",
-      "country": "Select your country of residence"
+      "country": "Select your country"
     },
     "errors": {
       "name": {

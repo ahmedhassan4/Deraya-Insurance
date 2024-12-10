@@ -20,7 +20,10 @@ import Stepper from "./Stepper";
 import { useServiceData } from "@/hooks/useServiceData";
 import Spinner from "../spinner";
 import { useCreateProvider } from "@/hooks/useCreateProvider";
-import { InsuranceOfferRequest } from "@/services/providersApi";
+import {
+  InsuranceOfferRequest,
+  InsuranceOfferResponse,
+} from "@/services/providersApi";
 
 // Map the API fields to your internal form fields
 const fieldMapping: { [key: string]: string } = {
@@ -170,17 +173,22 @@ const MultistepForm = () => {
         name: data.name || "",
         phone: data.phone || "",
         email: data.email || "",
-        // For other services, we do not include date_of_birth, country, interested_in
       } as InsuranceOfferRequest;
     }
 
     mutate(requestData, {
-      onSuccess: (responseData) => {
+      onSuccess: (responseData: InsuranceOfferResponse) => {
         console.log("Insurance offer created successfully:", responseData);
-        router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
+
+        if ("data" in responseData) {
+          router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
+        } else if ("message" in responseData) {
+          alert(responseData.message);
+        }
       },
       onError: (error) => {
         console.error("Insurance offer creation failed:", error);
+        alert("An error occurred while creating the insurance offer.");
       },
     });
   };
