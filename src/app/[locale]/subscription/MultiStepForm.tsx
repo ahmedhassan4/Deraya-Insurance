@@ -24,6 +24,8 @@ import {
   InsuranceOfferRequest,
   InsuranceOfferResponse,
 } from "@/services/providersApi";
+import useModal from "@/components/modal-views/use-madal";
+import SubmitFormModal from "./SubmitFormModal";
 
 // Map the API fields to your internal form fields
 const fieldMapping: { [key: string]: string } = {
@@ -146,6 +148,7 @@ const MultistepForm = () => {
   };
 
   const { mutate } = useCreateProvider();
+  const { openModal, closeModal } = useModal();
 
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
@@ -183,7 +186,16 @@ const MultistepForm = () => {
         if ("data" in responseData) {
           router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
         } else if ("message" in responseData) {
-          alert(responseData.message);
+          // alert(responseData.message);
+          openModal({
+            view: (
+              <SubmitFormModal
+                closeModal={closeModal}
+                message={responseData.message}
+              />
+            ),
+            customSize: "420px",
+          });
         }
       },
       onError: (error) => {
