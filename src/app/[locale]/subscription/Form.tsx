@@ -117,7 +117,7 @@ export const InterestedInField = () => {
           control={control}
           render={({ field }) => (
             <div>
-              <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5">
+              <div className="rounded-lg border-2 hover:border-[#B5BE34] p-4 mt-5">
                 <Radio
                   {...field}
                   label={t("interest.Inpatient")}
@@ -125,7 +125,7 @@ export const InterestedInField = () => {
                   checked={field.value === "Inpatient"}
                 />
               </div>
-              <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-2">
+              <div className="rounded-lg border-2 hover:border-[#B5BE34] p-4 mt-2">
                 <Radio
                   {...field}
                   label={t("interest.Inpatient_Outpatient")}
@@ -312,6 +312,7 @@ export const CountryField = () => {
       </label>
       <ReactFlagsSelect
         selected={selected}
+        selectedSize={18}
         onSelect={(code) => {
           setSelected(code);
           setValue("country", code);
