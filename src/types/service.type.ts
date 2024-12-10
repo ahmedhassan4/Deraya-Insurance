@@ -7,6 +7,7 @@ export interface ServiceType {
   inner_image: string;
   bullet_points: string[];
   hiddenInput: boolean;
+  fields: string[];
 }
 
 export interface ServiceResponse {

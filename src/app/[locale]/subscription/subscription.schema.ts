@@ -6,7 +6,7 @@ const fieldMapping: { [key: string]: string } = {
   name: "name",
   email: "email",
   phone: "phone",
-  date: "date",
+  date_of_birth: "date",
   country: "country",
   interested_in: "interestedIn",
 };
