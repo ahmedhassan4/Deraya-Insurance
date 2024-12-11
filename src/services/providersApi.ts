@@ -34,7 +34,7 @@ export interface InsuranceOfferMessageResponse {
 export type InsuranceOfferResponse =
   | InsuranceOfferSuccessResponse
   | InsuranceOfferMessageResponse;
-
+  
 export interface InsuranceOfferRequest {
   service_id: number;
   name: string;

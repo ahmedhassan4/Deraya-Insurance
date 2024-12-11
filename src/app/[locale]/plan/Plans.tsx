@@ -24,6 +24,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi);
 
+  console.log("slides", slides);
   const {
     prevBtnDisabled,
     nextBtnDisabled,
@@ -35,31 +36,32 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <section className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((item, index) => (
-            <div className="embla__slide" key={index}>
+          {slides.map((item) => (
+            <div className="embla__slide" key={item.id}>
               <Image
-                src="/investment.svg"
+                src={item.partner.logo}
                 alt={item.title}
                 width={20}
                 height={20}
                 className="mt-3 w-28 "
               />
               <div className="mt-3">
-                <Text className="font-bold mb-2 text-lg">{item.title}</Text>
-                <Text className="text-[#6B7280] text-sm">
-                  {" "}
-                  Starting from{" "}
-                  <span className="font-bold"> ${item.pricing}</span>
+                <Text className="font-bold mb-2 text-lg">
+                  {item.partner.name}
                 </Text>
                 <Text className="text-[#6B7280] text-sm">
                   {" "}
-                  Annual Ceiling of
-                  <span className="font-bold"> ${item.annualCeiling}</span>
+                  Starting from{" "}
+                  <span className="font-bold"> ${item.price.amount}</span>
+                </Text>
+                <Text className="text-[#6B7280] text-sm">
+                  {" "}
+                  {item.details[0].title}
                 </Text>
               </div>
               <div className="mt-3">
                 <div className="mt-5">
-                  {item.services.map((services: string[], index: number) => (
+                  {item.details.map((services: any, index: number) => (
                     <div
                       key={index}
                       className="flex items-start gap-2 mt-1 mb-3"
@@ -69,7 +71,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         className="flex-0"
                       />
                       <Text className=" text-[#6B7280] text-sm flex-1 ">
-                        {services}
+                        {services.bullet}
                       </Text>
                     </div>
                   ))}
