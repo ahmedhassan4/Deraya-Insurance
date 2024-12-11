@@ -129,8 +129,8 @@ export const InterestedInField = () => {
                 <Radio
                   {...field}
                   label={t("interest.Inpatient_Outpatient")}
-                  value="InpatientAndOutpatient"
-                  checked={field.value === "InpatientAndOutpatient"}
+                  value="Inpatient & Outpatient"
+                  checked={field.value === "Inpatient & Outpatient"}
                 />
               </div>
             </div>

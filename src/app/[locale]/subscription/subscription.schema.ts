@@ -53,7 +53,7 @@ export const useSubscriptionSchema = (fields: string[]) => {
         break;
       case "interestedIn":
         schemaObj[internalField] = z.enum(
-          ["Inpatient", "InpatientAndOutpatient"],
+          ["Inpatient", "Inpatient & Outpatient"],
           {
             required_error: t("errors.interested_in"),
           }
@@ -73,5 +73,5 @@ export type FormData = {
   phone?: string;
   date_of_birth?: Date | null;
   country?: string;
-  interestedIn?: "Inpatient" | "InpatientAndOutpatient";
+  interestedIn?: "Inpatient" | "Inpatient & Outpatient";
 };
