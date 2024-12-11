@@ -184,7 +184,7 @@ const MultistepForm = () => {
     mutate(requestData, {
       onSuccess: (responseData: InsuranceOfferResponse) => {
         console.log("Insurance offer created successfully:", responseData);
-        setPlanData(responseData);
+         setPlanData(responseData);
         if ("data" in responseData) {
           router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
         } else if ("message" in responseData) {

@@ -16,10 +16,12 @@ export interface InsuranceOfferSuccessResponse {
     };
     details: {
       title: string;
-      bullet: string;
-      is_included: number;
-      tooltip: string;
-      order: number;
+      bullets: {
+        text: string;
+        is_included: boolean;
+        tooltip: string;
+        order: number;
+      }[];
     }[];
     offer_type: string;
     service_id: number;
