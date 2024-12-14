@@ -9,6 +9,7 @@ import { PiInstagramLogo } from "react-icons/pi";
 import { Select } from "rizzui";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
+import Link from "next/link";
 
 const socialLinks = [
   {
@@ -68,12 +69,14 @@ const CardInfo: React.FC<CardInfoProps> = ({
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <div>
-        <Image
-          src="/deraya-logo-white.svg"
-          alt="logo"
-          width={200}
-          height={65}
-        ></Image>
+        <Link href="https://insurance.deraya.net/">
+          <Image
+            src="/deraya-logo-white.svg"
+            alt="logo"
+            width={200}
+            height={65}
+          ></Image>
+        </Link>
         <Line color="#fff" />
 
         <div className="mt-8">{children}</div>

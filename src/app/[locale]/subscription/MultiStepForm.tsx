@@ -155,40 +155,37 @@ const MultistepForm = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
 
-    let dateOfBirthStr = "";
-    if (data.date_of_birth instanceof Date) {
-      dateOfBirthStr = data.date_of_birth.toISOString().split("T")[0];
-    }
+    // Start with the mandatory service_id
+    const requestData: Record<string, any> = {
+      service_id: serviceId,
+    };
 
-    let requestData: InsuranceOfferRequest;
+    // Loop through the fields required by the current service
+    serviceFields.forEach((field) => {
+      const internalField = fieldMapping[field] || field;
+      const fieldValue = data[internalField as keyof FormData];
 
-    if (serviceId === 1 || serviceId === 8) {
-      requestData = {
-        service_id: serviceId,
-        name: data.name || "",
-        phone: data.phone || "",
-        email: data.email || "",
-        date_of_birth: dateOfBirthStr,
-        country: data.country || "",
-        interested_in: data.interestedIn || "Inpatient",
-      };
-    } else {
-      requestData = {
-        service_id: serviceId || 1,
-        name: data.name || "",
-        phone: data.phone || "",
-        email: data.email || "",
-      } as InsuranceOfferRequest;
-    }
+      if (
+        fieldValue !== undefined &&
+        fieldValue !== null &&
+        fieldValue !== ""
+      ) {
+        // Use 'field' as the key here, so "interested_in" stays in snake_case
+        if (field === "date_of_birth" && fieldValue instanceof Date) {
+          requestData[field] = fieldValue.toISOString().split("T")[0];
+        } else {
+          requestData[field] = fieldValue;
+        }
+      }
+    });
 
-    mutate(requestData, {
+    mutate(requestData as InsuranceOfferRequest, {
       onSuccess: (responseData: InsuranceOfferResponse) => {
         console.log("Insurance offer created successfully:", responseData);
-         setPlanData(responseData);
+        setPlanData(responseData);
         if ("data" in responseData) {
           router.push(`/${locale}/plan?service_id=${serviceId || 1}`);
         } else if ("message" in responseData) {
-          // alert(responseData.message);
           openModal({
             view: (
               <SubmitFormModal

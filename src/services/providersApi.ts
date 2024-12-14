@@ -42,9 +42,9 @@ export interface InsuranceOfferRequest {
   name: string;
   phone: string;
   email: string;
-  date_of_birth?: string; // Only if service_id=1
-  country?: string; // Only if service_id=1
-  interested_in?: string; // Only if service_id=1
+  date_of_birth?: string;
+  country?: string;
+  interested_in?: string;
 }
 
 export const createInsuranceOffer = async (
