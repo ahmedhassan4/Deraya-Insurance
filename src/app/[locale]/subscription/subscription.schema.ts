@@ -48,8 +48,7 @@ export const useSubscriptionSchema = (fields: string[]) => {
           .refine((val) => val !== null, { message: t("errors.date") });
         break;
       case "country":
-        schemaObj[internalField] = z.string({ message: t("errors.country") });
-        // .nonempty({ message: t("errors.country") });
+        schemaObj[internalField] = z.string();
         break;
       case "interestedIn":
         schemaObj[internalField] = z.enum(

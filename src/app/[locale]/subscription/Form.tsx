@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, Radio } from "rizzui";
 
@@ -13,7 +13,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import ReactFlagsSelect from "react-flags-select";
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -292,32 +291,22 @@ export function DateField({
 
 export const CountryField = () => {
   const {
-    setValue,
+    register,
     formState: { errors },
   } = useFormContext();
-  const [selected, setSelected] = useState("");
   const t = useTranslations("subscription");
   return (
-    <div>
-      <label className="block mb-1.5 text-sm font-medium text-gray-700">
-        {t("country")}
-      </label>
-      <ReactFlagsSelect
-        selected={selected}
-        selectedSize={18}
-        onSelect={(code) => {
-          setSelected(code);
-          setValue("country", code);
-        }}
-        placeholder={t("placeholder.country")}
-        searchable
-        searchPlaceholder="Search countries"
-      />
-      {errors.country?.message && (
-        <p className="mt-1 text-sm text-red-500">
-          {String(errors.country.message)}
-        </p>
-      )}
+    <div className="space-y-4">
+      <div>
+        <Input label={t("country")} size="lg" value={"Egypt"} disabled />
+        {/* Hidden input to ensure value is part of the form data */}
+        <input type="hidden" value="Egypt" {...register("country")} />
+        {errors.country?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.country.message)}
+          </p>
+        )}
+      </div>
     </div>
   );
 };
