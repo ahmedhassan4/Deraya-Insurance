@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, Radio } from "rizzui";
 
 import { Calendar as CalendarIcon } from "lucide-react";
-import { format, getMonth, getYear, setMonth, setYear } from "date-fns";
-import { cn } from "@/lib/utils";
+import { format, getYear, setMonth, setYear } from "date-fns";
+// import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -14,13 +14,6 @@ import {
 } from "@/components/ui/popover";
 
 import { useTranslations } from "next-intl";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export const NameField = () => {
   const {
@@ -175,10 +168,14 @@ export function DateField({
     "November",
     "December",
   ];
+
   const years = Array.from(
     { length: endYear - startYear + 1 },
     (_, i) => startYear + i
   );
+
+  const [viewMode, setViewMode] = useState<"year" | "month" | "day">("year");
+  const [tempDate, setTempDate] = useState<Date | null>(null);
 
   return (
     <div className="mt-4 mb-2">
@@ -191,29 +188,39 @@ export function DateField({
         render={({ field }) => {
           const { value, onChange } = field;
 
-          const handleMonthChange = (month: string) => {
-            const newDate = setMonth(
-              value || new Date(),
-              months.indexOf(month)
-            );
-            onChange(newDate);
+          const handleYearSelect = (year: number) => {
+            const newDate = setYear(value || new Date(), year);
+            setTempDate(newDate);
+            setViewMode("month");
           };
 
-          const handleYearChange = (year: string) => {
-            const newDate = setYear(value || new Date(), parseInt(year));
-            onChange(newDate);
+          const handleMonthSelect = (monthIndex: number) => {
+            if (!tempDate) return;
+            const newDate = setMonth(tempDate, monthIndex);
+            setTempDate(newDate);
+            setViewMode("day");
+          };
+
+          const handleDaySelect = (selectedDate: Date | undefined) => {
+            if (selectedDate) {
+              onChange(selectedDate);
+            }
+          };
+
+          const handleOpen = () => {
+            setTempDate(value || new Date());
+            setViewMode("year");
           };
 
           return (
             <>
-              <Popover>
+              <Popover onOpenChange={(open) => open && handleOpen()}>
                 <PopoverTrigger asChild>
                   <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full py-[23px] justify-start text-left font-normal",
-                      !value && "text-muted-foreground"
-                    )}
+                    variant="outline"
+                    className={`w-full py-[23px] justify-start text-left font-normal ${
+                      !value ? "text-gray-500" : ""
+                    }`}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {value ? (
@@ -223,61 +230,58 @@ export function DateField({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <div className="flex justify-between p-2 gap-2">
-                    <Select
-                      onValueChange={handleMonthChange}
-                      value={
-                        value
-                          ? months[getMonth(value)]
-                          : months[getMonth(new Date())]
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Month" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {months.map((month) => (
-                          <SelectItem key={month} value={month}>
-                            {month}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      onValueChange={handleYearChange}
-                      value={
-                        value
-                          ? getYear(value).toString()
-                          : getYear(new Date()).toString()
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Year" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {years.map((year) => (
-                          <SelectItem key={year} value={year.toString()}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <PopoverContent
+                  className="w-auto p-4 bg-white rounded-md shadow-md"
+                  align="start"
+                >
+                  {viewMode === "year" && (
+                    <div className="grid grid-cols-4 gap-2 max-h-64 overflow-auto p-2">
+                      {years.map((year) => (
+                        <button
+                          type="button"
+                          key={year}
+                          onClick={() => handleYearSelect(year)}
+                          className="w-14 h-10 flex items-center justify-center border border-gray-300 rounded-md transition-colors duration-200 cursor-pointer hover:bg-[#B5BE34] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#B5BE34]"
+                        >
+                          {year}
+                        </button>
+                      ))}
+                    </div>
+                  )}
 
-                  <Calendar
-                    mode="single"
-                    selected={value}
-                    onSelect={(selectedDate) => onChange(selectedDate)}
-                    initialFocus
-                    className="-z-30"
-                    month={value || new Date()}
-                    onMonthChange={(newDate) => onChange(newDate)}
-                  />
+                  {viewMode === "month" && tempDate && (
+                    <div className="grid grid-cols-3 gap-2 min-h-64 overflow-auto p-2">
+                      {months.map((month, index) => (
+                        <button
+                          type="button"
+                          key={month}
+                          onClick={() => handleMonthSelect(index)}
+                          className="w-20 h-12 flex items-center justify-center border border-gray-300 rounded-md transition-colors duration-200 cursor-pointer hover:bg-[#B5BE34] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#B5BE34]"
+                        >
+                          {month.slice(0, 3)}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {viewMode === "day" && tempDate && (
+                    <div className="p-2">
+                      <Calendar
+                        mode="single"
+                        selected={tempDate}
+                        onSelect={(selectedDate) =>
+                          handleDaySelect(selectedDate)
+                        }
+                        initialFocus
+                        month={tempDate}
+                        onMonthChange={(newDate) => setTempDate(newDate)}
+                      />
+                    </div>
+                  )}
                 </PopoverContent>
               </Popover>
               {errors.date_of_birth && (
-                <p className=" text-sm mt-2 text-red-500">
+                <p className="text-sm mt-2 text-red-500">
                   {String(errors.date_of_birth.message)}
                 </p>
               )}
