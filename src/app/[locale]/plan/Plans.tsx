@@ -10,7 +10,7 @@ import {
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { Text } from "rizzui";
-import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import { IoCheckmarkCircleSharp, IoCloseCircle } from "react-icons/io5";
 
 type PropType = {
   slides: any[];
@@ -61,18 +61,28 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               </div>
               <div className="mt-3">
                 <div className="mt-5">
-                  {item.details.map((services: any, index: number) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-2 mt-1 mb-3"
-                    >
-                      <IoCheckmarkCircleSharp
-                        color="#B5BE34"
-                        className="flex-0"
-                      />
-                      <Text className=" text-[#6B7280] text-sm flex-1 ">
-                        {services.bullet}
-                      </Text>
+                  {item.details.map((detail: any, detailIndex: number) => (
+                    <div key={detailIndex}>
+                      {detail.bullets.map(
+                        (service: any, bulletIndex: number) => (
+                          <div
+                            key={bulletIndex}
+                            className="flex items-start gap-2 mt-1 mb-3"
+                          >
+                            {service.is_included ? (
+                              <IoCheckmarkCircleSharp
+                                color={"#B5BE34"}
+                                className="flex-0"
+                              />
+                            ) : (
+                              <IoCloseCircle color="red" />
+                            )}
+                            <Text className="text-[#6B7280] text-sm flex-1">
+                              {service.text}
+                            </Text>
+                          </div>
+                        )
+                      )}
                     </div>
                   ))}
                 </div>
