@@ -135,6 +135,7 @@ export const InterestedInField = () => {
 };
 
 export function DateField() {
+  const [openDatePicker, setOpenDatePicker] = React.useState(false);
   const {
     control,
     formState: { errors },
@@ -160,14 +161,25 @@ export function DateField() {
             return (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DatePicker"]}>
-                  <DatePicker
-                    value={dayjsValue}
+                  <div
                     className="w-full"
-                    onChange={(newValue) =>
-                      field.onChange(newValue ? newValue.toDate() : null)
-                    }
-                    views={["year", "month", "day"]}
-                  />
+                    onClick={() => setOpenDatePicker(true)}>
+                    <DatePicker
+                      open={openDatePicker}
+                      value={dayjsValue}
+                      key={openDatePicker?.toString()}
+                      className="w-full"
+                      onOpen={() => setOpenDatePicker(true)}
+                      onClose={() => setOpenDatePicker(false)}
+                      onChange={newValue => {
+                        field.onChange(newValue ? newValue.toDate() : null);
+                        console.log("newValue");
+                        setOpenDatePicker(false);
+                        console.log("newValue 2");
+                      }}
+                      views={["year", "month", "day"]}
+                    />
+                  </div>
                 </DemoContainer>
               </LocalizationProvider>
             );
