@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
+import 'simplebar-react/dist/simplebar.min.css';
 
 import { getLocale, getMessages } from "next-intl/server";
 

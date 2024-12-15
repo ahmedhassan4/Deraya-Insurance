@@ -1,6 +1,6 @@
 "use client";
 import { CardInfoProps } from "@/types/cardInfo";
-import Line from "@/ui/Line";
+// import Line from "@/ui/Line";
 import Image from "next/image";
 import React from "react";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
@@ -77,7 +77,7 @@ const CardInfo: React.FC<CardInfoProps> = ({
             height={65}
           ></Image>
         </Link>
-        <Line color="#fff" />
+        {/* <Line color="#fff" /> */}
 
         <div className="mt-8">{children}</div>
       </div>

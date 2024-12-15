@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 2000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -44,6 +44,7 @@
     "react-select-country-list": "^2.2.3",
     "rizzui": "^0.8.7",
     "shadcn-ui": "^0.9.3",
+    "simplebar-react": "^3.3.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "uninstall": "^0.0.0",

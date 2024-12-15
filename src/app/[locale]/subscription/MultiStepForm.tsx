@@ -27,6 +27,7 @@ import {
 import useModal from "@/components/modal-views/use-madal";
 import SubmitFormModal from "./SubmitFormModal";
 import { usePlanStore } from "@/store/planStore";
+import { PiArrowsCounterClockwise } from "react-icons/pi";
 
 // Map the API fields to your internal form fields
 const fieldMapping: { [key: string]: string } = {
@@ -252,7 +253,7 @@ const MultistepForm = () => {
           onClick={handleReset}
           className="text-[#111928] font-normal text-lg"
         >
-          {t("reset")}
+         <PiArrowsCounterClockwise size={24} />
         </Button>
       </div>
       <Line marginTop="10px" thickness=".5px" />
