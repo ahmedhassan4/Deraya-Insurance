@@ -10,11 +10,11 @@ export interface CardLayoutProps {
 
 const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
   return (
-    <div className="h-screen p-4 sm:p-6 lg:p-6">
+    <div className="h-full p-4 sm:p-6 lg:p-6">
       <SimpleBar className="h-full">
         <div
           className={cn(
-            "w-full h-screen grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-contaienr overflow-hidden",
+            "w-full h-full grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-contaienr overflow-hidden",
             className
           )}>
           {children}
