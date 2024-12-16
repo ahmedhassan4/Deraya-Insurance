@@ -44,7 +44,7 @@ export const LeftSection: React.FC<LeftSectionProps> = ({
           "max-lg:fixed max-lg:inset-y-0 max-lg:left-0 max-lg:w-4/5 max-lg:shadow-2xl max-lg:bg-[#B5BE34]",
           isDrawerOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-full",
           // Default styling from original component
-          "bg-[#B5BE34] bg-[url('/Main.png')] bg-cover rounded-lg bg-center py-12 px-[72px]",
+          "bg-[#B5BE34] bg-[url('/Main.png')] bg-cover rounded-lg bg-center py-8 px-[72px]",
           className
         )}
       >
