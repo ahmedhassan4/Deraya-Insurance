@@ -17,7 +17,7 @@ function Services() {
 
   return (
     <section className="h-full w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-full">
         {data?.map((service: ServiceType) => (
           <Service key={service.id} service={service} />
         ))}

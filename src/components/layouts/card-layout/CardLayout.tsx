@@ -10,17 +10,20 @@ export interface CardLayoutProps {
 
 const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
   return (
-    <div className="h-full p-4 sm:p-6 lg:p-6">
-      <SimpleBar className="h-full">
-        <div
-          className={cn(
-            "w-full h-full grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-contaienr overflow-hidden",
-            className
-          )}>
-          {children}
-        </div>
-      </SimpleBar>
-    </div>
+      <div
+      className="m-5"
+        style={{ height: "calc(100dvh)" }} // 1.5rem top + 1.5rem bottom = 3rem total
+      >
+        <SimpleBar style={{ height: "100%" }}>
+          <div
+            className={cn(
+              "w-full h-full grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-container overflow-hidden",
+              className
+            )}>
+            {children}
+          </div>
+        </SimpleBar>
+      </div>
   );
 };
 

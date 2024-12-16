@@ -13,7 +13,7 @@ export default function MainPage() {
           <DrayaServicesInfo />
         </CardInfo>
       </LeftSection>
-      <CardSection className="px-6 py-12 flex items-center justify-center">
+      <CardSection className="px-6 flex items-center justify-center">
         <Services />
       </CardSection>
     </CardLayout>

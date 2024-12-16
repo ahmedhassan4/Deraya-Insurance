@@ -14,7 +14,7 @@ function SubscriptionPage() {
           <ServiceInfo />
         </CardInfo>
       </LeftSection>
-      <CardSection className=" px-6 py-12 flex items-center justify-center">
+      <CardSection className=" px-6 flex items-center justify-center">
         <MultiStepForm />
       </CardSection>
     </CardLayout>
