@@ -11,8 +11,7 @@ export interface CardLayoutProps {
 const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
   return (
       <div
-      className="m-5"
-        style={{ height: "calc(100dvh)" }} // 1.5rem top + 1.5rem bottom = 3rem total
+      className="m-5 h-screen"
       >
         <SimpleBar style={{ height: "100%" }}>
           <div
