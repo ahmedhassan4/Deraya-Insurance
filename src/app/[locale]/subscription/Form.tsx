@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { useTranslations } from "next-intl";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import SelectStep from "./SelectStep";
 
 export const NameField = () => {
   const {
@@ -19,6 +20,7 @@ export const NameField = () => {
   return (
     <div className="space-y-4">
       <div>
+        <SelectStep />
         <Input
           label={t("name")}
           size="lg"
@@ -164,7 +166,7 @@ export function DateField() {
                   <div
                     className="w-full"
                     // onClick={() => setOpenDatePicker(true)}
-                    >
+                  >
                     <MobileDatePicker
                       // open={openDatePicker}
                       // onClose={() => setOpenDatePicker(false)}
