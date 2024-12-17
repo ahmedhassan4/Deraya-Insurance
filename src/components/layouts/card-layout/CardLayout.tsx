@@ -10,7 +10,7 @@ export interface CardLayoutProps {
 const CardLayout: React.FC<CardLayoutProps> = ({ children, className }) => {
   return (
       <div
-      className="p-5 overflow-auto"
+      className="p-5"
       >
         {/* <SimpleBar 
          className="h-[100%]"> */}
