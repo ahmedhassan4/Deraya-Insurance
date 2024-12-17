@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 type OptionType = {
   label: string;
   value: number;
+  models: any[];
 };
 const SelectStep = () => {
   const [page, setPage] = useState(1);
@@ -13,7 +14,8 @@ const SelectStep = () => {
   const [meta, setMeta] = useState<any>({});
   const [searchParam, setSearchParam] = useState("");
   const locale = useLocale();
-
+  const [selectedOption, setSelectedOption] = useState<any>(null);
+  console.log("selectedOption", selectedOption);
   useEffect(() => {
     setPage(1);
   }, [searchParam]);
@@ -22,14 +24,20 @@ const SelectStep = () => {
     const fetchData = async () => {
       try {
         const options = await carsApi(locale, page, searchParam);
-
+        console.log("options", options);
         setMeta(options?.meta);
         setOptions(prevOptions => {
           const newItems =
-            options?.data?.map((item: { name: string; id: number }) => ({
-              label: item.name,
-              value: item.id,
-            })) || [];
+            options?.data?.map(
+              (item: { name: string; id: number; models: any[] }) => ({
+                label: item.name,
+                value: item.id,
+                models: item?.models?.map((model: { name: string }) => ({
+                  label: model.name,
+                  value: model.name,
+                })),
+              })
+            ) || [];
 
           return uniqBy([...prevOptions, ...newItems], "value");
         });
@@ -41,12 +49,20 @@ const SelectStep = () => {
   }, [page, searchParam]);
 
   return (
-    <SelectReact
-      options={options}
-      hasMore={options.length < meta?.total}
-      onLoadMore={() => setPage(page + 1)}
-      onInputChange={setSearchParam}
-    />
+    <div className="flex flex-col gap-4">
+      <SelectReact
+        options={options}
+        hasMore={options.length < meta?.total}
+        onLoadMore={() => setPage(page + 1)}
+        onChange={setSelectedOption}
+        onInputChange={setSearchParam}
+      />
+
+      <SelectReact
+        isDisabled={!Boolean(selectedOption)}
+        options={selectedOption?.models || []}
+      />
+    </div>
   );
 };
 export default SelectStep;
