@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useTranslations } from "next-intl";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 export const NameField = () => {
   const {
@@ -163,14 +163,15 @@ export function DateField() {
                 <DemoContainer components={["DatePicker"]}>
                   <div
                     className="w-full"
-                    onClick={() => setOpenDatePicker(true)}>
-                    <DatePicker
-                      open={openDatePicker}
+                    // onClick={() => setOpenDatePicker(true)}
+                    >
+                    <MobileDatePicker
+                      // open={openDatePicker}
+                      // onClose={() => setOpenDatePicker(false)}
+                      // onAccept={() => setOpenDatePicker(false)}
                       value={dayjsValue}
                       key={openDatePicker?.toString()}
                       className="w-full"
-                      onOpen={() => setOpenDatePicker(true)}
-                      onClose={() => setOpenDatePicker(false)}
                       onChange={newValue => {
                         field.onChange(newValue ? newValue.toDate() : null);
                         console.log("newValue");
