@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { useTranslations } from "next-intl";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export const NameField = () => {
   const {
