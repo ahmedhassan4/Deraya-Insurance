@@ -37,14 +37,17 @@ function ServiceInfo() {
         alt={service.title}
         width={100}
         height={100}
+        className="hidden lg:block"
       />
 
-      <Text className="text-white text-4xl mt-5 font-extrabold max-w-[500px]">{service.title}</Text>
+      <Text className="text-white text-2xl lg:text-4xl mt-5 font-extrabold max-w-[500px]">
+        {service.title}
+      </Text>
       <div className="mt-5">
         {service.bullet_points.map((detailes: string, index: number) => (
           <div key={index} className="flex items-start gap-2 mt-1">
             <IoCheckmarkCircleSharp color="white" className="flex-0" />
-            <Text className="text-white text-base  font-medium flex-1">
+            <Text className="text-white text-sm lg:text-base  font-medium flex-1">
               {detailes}
             </Text>
           </div>
