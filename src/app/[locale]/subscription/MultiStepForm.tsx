@@ -11,6 +11,8 @@ import {
   CarTypeField,
   MarketValueField,
   ProductionYearField,
+  CompanyNameField,
+  EmployeesCountField,
 } from "./Form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "rizzui";
@@ -43,6 +45,8 @@ const fieldMapping: { [key: string]: string } = {
   model: "model",
   market_value: "market_value",
   production_year: "production_year",
+  company_name: "company_name",
+  employees_count: "employees_count",
 };
 
 const fieldComponents: { [key: string]: React.ReactElement } = {
@@ -55,6 +59,8 @@ const fieldComponents: { [key: string]: React.ReactElement } = {
   car_type: <CarTypeField />,
   market_value: <MarketValueField />,
   production_year: <ProductionYearField />,
+  company_name: <CompanyNameField />,
+  employees_count: <EmployeesCountField />,
 };
 
 const MultistepForm = () => {
@@ -89,6 +95,7 @@ const MultistepForm = () => {
         case "phone":
         case "country":
         case "model":
+        case "company_name":
           defaults[internalField] = "";
           break;
         case "date_of_birth":
@@ -105,6 +112,9 @@ const MultistepForm = () => {
           break;
         case "production_year":
           defaults[internalField] = new Date().getFullYear();
+          break;
+        case "employees_count":
+          defaults[internalField] = 1;
           break;
         default:
           break;

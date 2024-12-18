@@ -59,6 +59,8 @@
     "car_model": "What is the model of your car?",
     "car_year": "What is the production year of the car?",
     "car_value": "What is the current market value of the car?",
+    "company_name": "What is the name of your company?",
+    "employees_count": "How many employees do you have?",
     "submit": "Submit",
     "placeholder": {
       "name": "Enter your full name",
@@ -67,7 +69,9 @@
       "date": "Select your date of birth",
       "country": "Select your country",
       "car_value": "Enter your car market value",
-      "car_year": "Enter your car production year"
+      "car_year": "Enter your car production year",
+      "company_name": "Enter your company name",
+      "employees_count": "Enter the number of employees"
     },
     "errors": {
       "name": {
@@ -89,6 +93,12 @@
       "car_value": {
         "empty": "Please enter your car market value",
         "invalid": "Please enter a valid car market value"
+      },
+      "company_name": "Please enter your company name",
+      "employees_count": {
+        "empty": "Please enter the number of employees",
+        "invalid": "Please enter a valid number of employees",
+        "min": "The number of employees must be at least 1"
       }
     },
     "compare_prices": "Compare Prices"

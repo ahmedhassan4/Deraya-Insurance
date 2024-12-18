@@ -393,3 +393,58 @@ export const ProductionYearField = () => {
     </div>
   );
 };
+
+
+export const CompanyNameField = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <Input
+          label={t("company_name")}
+          type="text"
+          size="lg"
+          placeholder={t("placeholder.company_name")}
+          {...register("company_name")}
+        />
+        {errors.company_name?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.company_name.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const EmployeesCountField = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <Input
+          label={t("employees_count")}
+          type="number"
+          size="lg"
+          placeholder={t("placeholder.employees_count")}
+          {...register("employees_count", { valueAsNumber: true })}
+        />
+        {errors.employees_count?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.employees_count.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};

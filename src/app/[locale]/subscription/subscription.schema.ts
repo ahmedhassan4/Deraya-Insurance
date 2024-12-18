@@ -12,6 +12,8 @@ const fieldMapping: { [key: string]: string } = {
   model: "model",
   market_value: "market_value",
   production_year: "production_year",
+  company_name: "company_name",
+  employees_count: "employees_count",
 };
 
 export const useSubscriptionSchema = (fields: string[]) => {
@@ -82,6 +84,20 @@ export const useSubscriptionSchema = (fields: string[]) => {
           })
           .max(2018, t("errors.car_year.max"));
         break;
+      case "company_name":
+        schemaObj[internalField] = z.string().nonempty({
+          message: t("errors.company_name"),
+        });
+
+        break;
+      case "employees_count":
+        schemaObj[internalField] = z
+          .number({
+            required_error: t("errors.employees_count.empty"),
+            invalid_type_error: t("errors.employees_count.invalid"),
+          })
+          .min(1, t("errors.employees_count.min"));
+        break;
       default:
         break;
     }
@@ -101,4 +117,6 @@ export type FormData = {
   model?: any;
   market_value?: number;
   production_year?: number;
+  company_name?: string;
+  employees_count?: number;
 };
