@@ -54,15 +54,20 @@
     },
     "date": "Date of Birth",
     "country": "Country of Residence",
-
     "fra_broker": "Are you an FRA registered broker?",
+    "car_brand": "What is the brand of your car?",
+    "car_model": "What is the model of your car?",
+    "car_year": "What is the production year of the car?",
+    "car_value": "What is the current market value of the car?",
     "submit": "Submit",
     "placeholder": {
       "name": "Enter your full name",
       "email": "Enter your email",
       "phone": "Enter your phone number",
       "date": "Select your date of birth",
-      "country": "Select your country"
+      "country": "Select your country",
+      "car_value": "Enter your car market value",
+      "car_year": "Enter your car production year"
     },
     "errors": {
       "name": {
@@ -73,7 +78,18 @@
       "phone": "Invalid phone number",
       "date": "Please select your date of birth",
       "country": "Please select your country of residence",
-      "interested_in": "Please select your interest"
+      "interested_in": "Please select your interest",
+      "car_brand": "Please select your car brand",
+      "car_model": "Please select your car model",
+      "car_year": {
+        "empty": "Please enter your car production year",
+        "invalid": "Please enter a valid year",
+        "max": "The car production year must be earlier than 2018"
+      },
+      "car_value": {
+        "empty": "Please enter your car market value",
+        "invalid": "Please enter a valid car market value"
+      }
     },
     "compare_prices": "Compare Prices"
   },

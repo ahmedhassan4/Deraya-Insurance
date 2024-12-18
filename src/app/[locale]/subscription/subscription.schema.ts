@@ -8,6 +8,10 @@ const fieldMapping: { [key: string]: string } = {
   date_of_birth: "date_of_birth",
   country: "country",
   interested_in: "interestedIn",
+  car_type: "car_type",
+  model: "model",
+  market_value: "market_value",
+  production_year: "production_year",
 };
 
 export const useSubscriptionSchema = (fields: string[]) => {
@@ -38,7 +42,6 @@ export const useSubscriptionSchema = (fields: string[]) => {
           .nonempty({ message: t("errors.phone") });
         break;
       case "date_of_birth":
-        // Validate as a Date. We'll convert it to string on submit.
         schemaObj[internalField] = z
           .date({
             required_error: t("errors.date"),
@@ -58,6 +61,27 @@ export const useSubscriptionSchema = (fields: string[]) => {
           }
         );
         break;
+      case "car_type":
+        schemaObj[internalField] = z.any();
+        break;
+      case "model":
+        schemaObj[internalField] = z.any();
+
+        break;
+      case "market_value":
+        schemaObj[internalField] = z.number({
+          required_error: t("errors.car_value.empty"),
+          invalid_type_error: t("errors.car_value.invalid"),
+        });
+        break;
+      case "production_year":
+        schemaObj[internalField] = z
+          .number({
+            required_error: t("errors.car_year.empty"),
+            invalid_type_error: t("errors.car_year.invalid"),
+          })
+          .max(2018, t("errors.car_year.max"));
+        break;
       default:
         break;
     }
@@ -73,4 +97,8 @@ export type FormData = {
   date_of_birth?: Date | null;
   country?: string;
   interestedIn?: "Inpatient" | "Inpatient & Outpatient";
+  car_type?: any;
+  model?: any;
+  market_value?: number;
+  production_year?: number;
 };

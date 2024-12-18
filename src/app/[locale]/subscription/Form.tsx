@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, Radio } from "rizzui";
 
@@ -6,10 +6,11 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
 import { useTranslations } from "next-intl";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import SelectStep from "./SelectStep";
+import { uniqBy } from "lodash";
+import { carsApi } from "@/services/carsApi";
+import SelectReact from "@/components/ui/SelectReact";
 
 export const NameField = () => {
   const {
@@ -20,7 +21,6 @@ export const NameField = () => {
   return (
     <div className="space-y-4">
       <div>
-        <SelectStep />
         <Input
           label={t("name")}
           size="lg"
@@ -174,7 +174,7 @@ export function DateField() {
                       value={dayjsValue}
                       key={openDatePicker?.toString()}
                       className="w-full"
-                      onChange={newValue => {
+                      onChange={(newValue) => {
                         field.onChange(newValue ? newValue.toDate() : null);
                         console.log("newValue");
                         setOpenDatePicker(false);
@@ -213,6 +213,180 @@ export const CountryField = () => {
         {errors.country?.message && (
           <p className="mt-1 text-sm text-red-500">
             {String(errors.country.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+type OptionType = {
+  label: string;
+  value: number;
+  models: { label: string; value: string }[];
+};
+
+export const CarTypeField = () => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  const [page, setPage] = useState(1);
+  const [options, setOptions] = useState<OptionType[]>([]);
+  const [meta, setMeta] = useState<any>({});
+  const [searchParam, setSearchParam] = useState("");
+
+  // Watch the currently selected car_type from the form
+  const carMakeValue = watch("car_type");
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchParam]);
+
+  // Fetch car makes from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await carsApi(page, searchParam);
+        setMeta(data?.meta);
+
+        setOptions((prevOptions) => {
+          const newItems =
+            data?.data?.map(
+              (item: { name: string; id: number; models: any[] }) => ({
+                label: item.name,
+                value: item.id,
+                models: item?.models?.map((model: { name: string }) => ({
+                  label: model.name,
+                  value: model.name,
+                })),
+              })
+            ) || [];
+          return uniqBy([...prevOptions, ...newItems], "value");
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }, [page, searchParam]);
+
+  // Find the selected car make object to populate its models
+  const selectedCarMake = useMemo(
+    () => options.find((opt) => opt.value === carMakeValue),
+    [options, carMakeValue]
+  );
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          {t("car_brand")}
+        </label>
+        <Controller
+          name="car_type"
+          control={control}
+          render={({ field }) => (
+            <SelectReact
+              {...field}
+              options={options}
+              hasMore={options.length < (meta?.total || 0)}
+              onLoadMore={() => setPage((prev) => prev + 1)}
+              onInputChange={setSearchParam}
+              onChange={(newValue: any) => {
+                // When a car type is selected, update the form state
+                field.onChange(newValue?.value || "");
+                // Reset the model field if a new car type is chosen
+                setValue("model", "");
+              }}
+            />
+          )}
+        />
+        {errors.car_type?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.car_type.message)}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          {t("car_model")}
+        </label>
+        <Controller
+          name="model"
+          control={control}
+          render={({ field }) => (
+            <SelectReact
+              {...field}
+              isDisabled={!Boolean(selectedCarMake)}
+              options={selectedCarMake?.models || []}
+              onChange={(newValue: any) =>
+                field.onChange(newValue?.value || "")
+              }
+            />
+          )}
+        />
+        {errors.model?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.model.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const MarketValueField = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <Input
+          label={t("car_value")}
+          type="number"
+          size="lg"
+          placeholder={t("placeholder.car_value")}
+          {...register("market_value", { valueAsNumber: true })}
+        />
+        {errors.market_value?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.market_value.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const ProductionYearField = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <Input
+          label={t("car_year")}
+          type="number"
+          size="lg"
+          placeholder={t("placeholder.car_year")}
+          {...register("production_year", { valueAsNumber: true })}
+        />
+        {errors.production_year?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.production_year.message)}
           </p>
         )}
       </div>

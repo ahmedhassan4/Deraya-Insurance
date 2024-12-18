@@ -1,7 +1,6 @@
 import SelectReact from "@/components/ui/SelectReact";
 import { carsApi } from "@/services/carsApi";
 import { uniqBy } from "lodash";
-import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 type OptionType = {
   label: string;
@@ -13,7 +12,6 @@ const SelectStep = () => {
   const [options, setOptions] = useState<OptionType[]>([]);
   const [meta, setMeta] = useState<any>({});
   const [searchParam, setSearchParam] = useState("");
-  const locale = useLocale();
   const [selectedOption, setSelectedOption] = useState<any>(null);
   console.log("selectedOption", selectedOption);
   useEffect(() => {
@@ -23,10 +21,10 @@ const SelectStep = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const options = await carsApi(locale, page, searchParam);
+        const options = await carsApi(page, searchParam);
         console.log("options", options);
         setMeta(options?.meta);
-        setOptions(prevOptions => {
+        setOptions((prevOptions) => {
           const newItems =
             options?.data?.map(
               (item: { name: string; id: number; models: any[] }) => ({
@@ -57,7 +55,6 @@ const SelectStep = () => {
         onChange={setSelectedOption}
         onInputChange={setSearchParam}
       />
-
       <SelectReact
         isDisabled={!Boolean(selectedOption)}
         options={selectedOption?.models || []}

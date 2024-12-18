@@ -1,14 +1,15 @@
 import axios from "axios";
 
-export const carsApi = async (locale: string, page: number, searchParam: string): Promise<any> => {
+export const carsApi = async (
+  page: number,
+  searchParam: string
+): Promise<any> => {
   try {
     const response = await axios.get(
-      "https://insurance.incodehub.com/api/v2/car-makes?page=" + page + "&name=" + searchParam,
-      {
-        headers: {
-          "X-LOCALE": locale,
-        },
-      }
+      "https://insurance.incodehub.com/api/v2/car-makes?page=" +
+        page +
+        "&name=" +
+        searchParam
     );
     return response.data;
   } catch (error) {

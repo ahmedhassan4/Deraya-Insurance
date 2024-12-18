@@ -8,6 +8,9 @@ import {
   InterestedInField,
   DateField,
   CountryField,
+  CarTypeField,
+  MarketValueField,
+  ProductionYearField,
 } from "./Form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "rizzui";
@@ -29,7 +32,6 @@ import SubmitFormModal from "./SubmitFormModal";
 import { usePlanStore } from "@/store/planStore";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 
-// Map the API fields to your internal form fields
 const fieldMapping: { [key: string]: string } = {
   name: "name",
   email: "email",
@@ -37,6 +39,10 @@ const fieldMapping: { [key: string]: string } = {
   date_of_birth: "date_of_birth",
   country: "country",
   interested_in: "interestedIn",
+  car_type: "car_type",
+  model: "model",
+  market_value: "market_value",
+  production_year: "production_year",
 };
 
 const fieldComponents: { [key: string]: React.ReactElement } = {
@@ -46,6 +52,9 @@ const fieldComponents: { [key: string]: React.ReactElement } = {
   date_of_birth: <DateField />,
   country: <CountryField />,
   interestedIn: <InterestedInField />,
+  car_type: <CarTypeField />,
+  market_value: <MarketValueField />,
+  production_year: <ProductionYearField />,
 };
 
 const MultistepForm = () => {
@@ -79,13 +88,23 @@ const MultistepForm = () => {
         case "email":
         case "phone":
         case "country":
+        case "model":
           defaults[internalField] = "";
           break;
         case "date_of_birth":
           defaults[internalField] = null;
           break;
+        case "car_type":
+          defaults[internalField] = "";
+          break;
         case "interestedIn":
           defaults[internalField] = "Inpatient";
+          break;
+        case "market_value":
+          defaults[internalField] = 0;
+          break;
+        case "production_year":
+          defaults[internalField] = new Date().getFullYear();
           break;
         default:
           break;
@@ -156,12 +175,10 @@ const MultistepForm = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
 
-    // Start with the mandatory service_id
     const requestData: Record<string, any> = {
       service_id: serviceId,
     };
 
-    // Loop through the fields required by the current service
     serviceFields.forEach((field) => {
       const internalField = fieldMapping[field] || field;
       const fieldValue = data[internalField as keyof FormData];
@@ -171,7 +188,6 @@ const MultistepForm = () => {
         fieldValue !== null &&
         fieldValue !== ""
       ) {
-        // Use 'field' as the key here, so "interested_in" stays in snake_case
         if (field === "date_of_birth" && fieldValue instanceof Date) {
           requestData[field] = fieldValue.toISOString().split("T")[0];
         } else {
@@ -253,7 +269,7 @@ const MultistepForm = () => {
           onClick={handleReset}
           className="text-[#111928] font-normal text-lg"
         >
-         <PiArrowsCounterClockwise size={24} />
+          <PiArrowsCounterClockwise size={24} />
         </Button>
       </div>
       <Line marginTop="10px" thickness=".5px" />
