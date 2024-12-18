@@ -13,6 +13,7 @@ import {
   ProductionYearField,
   CompanyNameField,
   EmployeesCountField,
+  InsuranceTypeField,
 } from "./Form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "rizzui";
@@ -47,6 +48,7 @@ const fieldMapping: { [key: string]: string } = {
   production_year: "production_year",
   company_name: "company_name",
   employees_count: "employees_count",
+  insurance_type: "insurance_type",
 };
 
 const fieldComponents: { [key: string]: React.ReactElement } = {
@@ -61,6 +63,7 @@ const fieldComponents: { [key: string]: React.ReactElement } = {
   production_year: <ProductionYearField />,
   company_name: <CompanyNameField />,
   employees_count: <EmployeesCountField />,
+  insurance_type: <InsuranceTypeField />,
 };
 
 const MultistepForm = () => {
@@ -95,6 +98,7 @@ const MultistepForm = () => {
         case "phone":
         case "country":
         case "model":
+        case "insurance_type":
         case "company_name":
           defaults[internalField] = "";
           break;

@@ -14,6 +14,7 @@ const fieldMapping: { [key: string]: string } = {
   production_year: "production_year",
   company_name: "company_name",
   employees_count: "employees_count",
+  insurance_type: "insurance_type",
 };
 
 export const useSubscriptionSchema = (fields: string[]) => {
@@ -98,6 +99,12 @@ export const useSubscriptionSchema = (fields: string[]) => {
           })
           .min(1, t("errors.employees_count.min"));
         break;
+      case "insurance_type":
+        schemaObj[internalField] = z.string({
+          required_error: t("errors.insurance_type"),
+        });
+        // .nonempty({ message: t("errors.insurance_type_required") });
+        break;
       default:
         break;
     }
@@ -119,4 +126,5 @@ export type FormData = {
   production_year?: number;
   company_name?: string;
   employees_count?: number;
+  insurance_type?: string;
 };

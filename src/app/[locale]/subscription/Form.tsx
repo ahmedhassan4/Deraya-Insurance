@@ -448,3 +448,64 @@ export const EmployeesCountField = () => {
     </div>
   );
 };
+
+export const InsuranceTypeField = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  const t = useTranslations("subscription");
+
+  const insuranceOptions = useMemo(
+    () => [
+      { value: "Property", label: "Property" },
+      { value: "Home", label: "Home" },
+      { value: "Marine", label: "Marine" },
+      { value: "Liability", label: "Liability" },
+      { value: "Engineering", label: "Engineering" },
+      { value: "Machinery breakdown", label: "Machinery breakdown" },
+      { value: "Motor fleet", label: "Motor fleet" },
+      { value: "Small business", label: "Small business" },
+      { value: "Cyber risk", label: "Cyber risk" },
+      { value: "Hull- Yacht", label: "Hull- Yacht" },
+      { value: "Cash transit", label: "Cash transit" },
+      { value: "Personal accident", label: "Personal accident" },
+      { value: "Business interruption", label: "Business interruption" },
+      { value: "Loss of profit", label: "Loss of profit" },
+      { value: "Credit insurance", label: "Credit insurance" },
+    ],
+    []
+  );
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          {t("insurance_type")}
+        </label>
+        <Controller
+          name="insurance_type"
+          control={control}
+          render={({ field }) => (
+            <SelectReact
+              value={
+                insuranceOptions.find((opt) => opt.value === field.value) ||
+                null
+              }
+              options={insuranceOptions}
+              onChange={(newValue: any) => {
+                // Extract just the value from the selected option
+                field.onChange(newValue?.value || "");
+              }}
+            />
+          )}
+        />
+        {errors.insurance_type?.message && (
+          <p className="mt-1 text-sm text-red-500">
+            {String(errors.insurance_type.message)}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};

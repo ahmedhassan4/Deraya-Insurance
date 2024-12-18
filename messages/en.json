@@ -61,6 +61,7 @@
     "car_value": "What is the current market value of the car?",
     "company_name": "What is the name of your company?",
     "employees_count": "How many employees do you have?",
+    "insurance_type": "What type of insurance are you interested in?",
     "submit": "Submit",
     "placeholder": {
       "name": "Enter your full name",
@@ -71,7 +72,8 @@
       "car_value": "Enter your car market value",
       "car_year": "Enter your car production year",
       "company_name": "Enter your company name",
-      "employees_count": "Enter the number of employees"
+      "employees_count": "Enter the number of employees",
+      "insurance_type": "Select your insurance type"
     },
     "errors": {
       "name": {
@@ -99,7 +101,8 @@
         "empty": "Please enter the number of employees",
         "invalid": "Please enter a valid number of employees",
         "min": "The number of employees must be at least 1"
-      }
+      },
+      "insurance_type": "Please select your insurance type"
     },
     "compare_prices": "Compare Prices"
   },
