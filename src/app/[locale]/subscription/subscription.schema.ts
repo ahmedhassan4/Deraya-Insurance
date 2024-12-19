@@ -65,11 +65,14 @@ export const useSubscriptionSchema = (fields: string[]) => {
         );
         break;
       case "car_type":
-        schemaObj[internalField] = z.any();
+        schemaObj[internalField] = z.number({
+          required_error: t("errors.car_brand"),
+        });
         break;
       case "model":
-        schemaObj[internalField] = z.any();
-
+        schemaObj[internalField] = z.string().nonempty({
+          message: t("errors.car_model"),
+        });
         break;
       case "market_value":
         schemaObj[internalField] = z.number({

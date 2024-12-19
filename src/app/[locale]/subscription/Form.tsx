@@ -219,10 +219,16 @@ export const CountryField = () => {
     </div>
   );
 };
+
+type ModelOption = {
+  label: string;
+  value: string;
+};
+
 type OptionType = {
   label: string;
   value: number;
-  models: { label: string; value: string }[];
+  models?: ModelOption[];
 };
 
 export const CarTypeField = () => {
@@ -239,8 +245,9 @@ export const CarTypeField = () => {
   const [meta, setMeta] = useState<any>({});
   const [searchParam, setSearchParam] = useState("");
 
-  // Watch the currently selected car_type from the form
+  // Watch current values
   const carMakeValue = watch("car_type");
+  const modelValue = watch("model");
 
   useEffect(() => {
     setPage(1);
@@ -280,6 +287,18 @@ export const CarTypeField = () => {
     [options, carMakeValue]
   );
 
+  // Find the currently selected car_type option object
+  const selectedCarTypeOption = useMemo(
+    () => options.find((opt) => opt.value === carMakeValue) || null,
+    [options, carMakeValue]
+  );
+
+  // Find the currently selected model option object
+  const selectedModelOption = useMemo(() => {
+    if (!selectedCarMake || !selectedCarMake.models) return null;
+    return selectedCarMake.models.find((m) => m.value === modelValue) || null;
+  }, [selectedCarMake, modelValue]);
+
   return (
     <div className="space-y-4">
       <div>
@@ -289,21 +308,25 @@ export const CarTypeField = () => {
         <Controller
           name="car_type"
           control={control}
-          render={({ field }) => (
-            <SelectReact
-              {...field}
-              options={options}
-              hasMore={options.length < (meta?.total || 0)}
-              onLoadMore={() => setPage((prev) => prev + 1)}
-              onInputChange={setSearchParam}
-              onChange={(newValue: any) => {
-                // When a car type is selected, update the form state
-                field.onChange(newValue?.value || "");
-                // Reset the model field if a new car type is chosen
-                setValue("model", "");
-              }}
-            />
-          )}
+          render={({ field }) => {
+            const oldCarMakeValue = watch("car_type");
+            return (
+              <SelectReact
+                {...field}
+                options={options}
+                value={selectedCarTypeOption} // Control the selected value
+                hasMore={options.length < (meta?.total || 0)}
+                onLoadMore={() => setPage((prev) => prev + 1)}
+                onInputChange={setSearchParam}
+                onChange={(newValue: any) => {
+                  field.onChange(newValue?.value || "");
+                  if (newValue?.value !== oldCarMakeValue) {
+                    setValue("model", "");
+                  }
+                }}
+              />
+            );
+          }}
         />
         {errors.car_type?.message && (
           <p className="mt-1 text-sm text-red-500">
@@ -324,6 +347,7 @@ export const CarTypeField = () => {
               {...field}
               isDisabled={!Boolean(selectedCarMake)}
               options={selectedCarMake?.models || []}
+              value={selectedModelOption} // Control the selected model
               onChange={(newValue: any) =>
                 field.onChange(newValue?.value || "")
               }
@@ -339,7 +363,6 @@ export const CarTypeField = () => {
     </div>
   );
 };
-
 export const MarketValueField = () => {
   const {
     register,
