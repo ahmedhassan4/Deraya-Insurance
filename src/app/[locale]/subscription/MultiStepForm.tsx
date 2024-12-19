@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import {
   NameField,
@@ -178,6 +178,34 @@ const MultistepForm = () => {
     setCompletedSteps([]);
   };
 
+  // Add keyboard event handler
+  useEffect(() => {
+    const handleKeyPress = async (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        if (currentStep === formSteps.length - 1) {
+          // On the last step, submit the form
+          const isValid = await methods.trigger();
+          if (isValid) {
+            methods.handleSubmit(onSubmit)();
+          }
+        } else {
+          // On other steps, move to next step
+          handleNextStep();
+        }
+      }
+    };
+
+    // Add event listener
+    document.addEventListener("keypress", handleKeyPress);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("keypress", handleKeyPress);
+    };
+  }, [currentStep, formSteps.length, methods]);
+
   const handleBackToServices = () => {
     router.back();
   };
@@ -311,7 +339,15 @@ const MultistepForm = () => {
       {/* Form */}
       {formSteps.length > 0 && (
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            onKeyPress={(e) => {
+              // Prevent form submission on Enter key
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+            }}
+          >
             <div className="mb-6">{formSteps[currentStep].component}</div>
 
             {/* Navigation Buttons */}
