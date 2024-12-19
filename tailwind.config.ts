@@ -13,6 +13,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        default: "#B5BE34",
         background: colors.white,
 
         foreground: colors.gray[600],

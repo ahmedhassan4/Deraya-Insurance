@@ -63,14 +63,17 @@ const SelectReact = ({
   }, [value]);
 
   return (
-    <div className={cn('w-full', className)}>
-      {label && <Label className="rizzui-input-label mb-1.5 block text-sm font-medium">
-        {label}
-      </Label>}
+    <div className={cn("w-full", className)}>
+      {label && (
+        <Label className="rizzui-input-label mb-1.5 block text-sm font-medium">
+          {label}
+        </Label>
+      )}
       <Select
         value={valueState}
         {...field}
         options={uniqBy(options, "value")}
+        // className="p-5"
         isDisabled={isDisabled}
         onInputChange={(value) => {
           setSearchParams(value);

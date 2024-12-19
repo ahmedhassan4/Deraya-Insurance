@@ -515,6 +515,7 @@ export const InsuranceTypeField = () => {
                 insuranceOptions.find((opt) => opt.value === field.value) ||
                 null
               }
+              className="py-3"
               options={insuranceOptions}
               onChange={(newValue: any) => {
                 // Extract just the value from the selected option
