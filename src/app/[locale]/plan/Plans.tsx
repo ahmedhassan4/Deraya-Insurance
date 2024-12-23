@@ -11,13 +11,15 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { Text } from "rizzui";
 import { IoCheckmarkCircleSharp, IoCloseCircle } from "react-icons/io5";
+import { BsArrowRight } from "react-icons/bs";
+import Link from "next/link";
 
 type PropType = {
   slides: any[];
   options?: EmblaOptionsType;
 };
 
-const EmblaCarousel: React.FC<PropType> = props => {
+const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
@@ -36,7 +38,7 @@ const EmblaCarousel: React.FC<PropType> = props => {
     <section className="embla mb-10">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map(item => {
+          {slides.map((item) => {
             return (
               <div className="embla__slide relative" key={item.id}>
                 {item?.most_popular ? (
@@ -75,7 +77,8 @@ const EmblaCarousel: React.FC<PropType> = props => {
                           (service: any, bulletIndex: number) => (
                             <div
                               key={bulletIndex}
-                              className="flex items-start gap-2 mt-1 mb-3">
+                              className="flex items-start gap-2 mt-1 mb-3"
+                            >
                               {service.is_included ? (
                                 <IoCheckmarkCircleSharp
                                   color={"#B5BE34"}
@@ -94,6 +97,14 @@ const EmblaCarousel: React.FC<PropType> = props => {
                     ))}
                   </div>
                 </div>
+                {item?.most_popular && item?.name === "Bupa" && (
+                  <Link href="https://insurance.deraya.net/offers/1">
+                    <Text className="flex items-center text-[#B5BE34] cursor-pointer hover:underline">
+                      Get an instant quote
+                      <BsArrowRight className="ms-2" color="#B5BE34" />
+                    </Text>
+                  </Link>
+                )}
               </div>
             );
           })}
