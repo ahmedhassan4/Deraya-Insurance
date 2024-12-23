@@ -250,6 +250,7 @@ const MultistepForm = () => {
               <SubmitFormModal
                 closeModal={closeModal}
                 message={responseData.message}
+                title={responseData.title}
               />
             ),
             customSize: "420px",

@@ -30,6 +30,7 @@ export interface InsuranceOfferSuccessResponse {
 
 export interface InsuranceOfferMessageResponse {
   message: string;
+  title?: string;
 }
 
 // The response can be either success (with data array) or message
