@@ -10,9 +10,11 @@ import { Controller, useForm } from "react-hook-form";
 import SubmitModal from "./SubmitModal";
 import useModal from "@/components/modal-views/use-madal";
 import { useLocale, useTranslations } from "next-intl";
+import { useGetInTouch } from "@/hooks/useGetInTouch";
 
 function Contact() {
   const t = useTranslations("Form");
+  const { mutate, isPending, isError, error } = useGetInTouch();
 
   const contactFormSchema = z.object({
     name: z.string().min(2, { message: t("errors.name") }),
@@ -38,14 +40,26 @@ function Contact() {
   });
 
   const locale = useLocale();
-
   const { openModal, closeModal } = useModal();
 
   const onSubmit = (data: ContactFormProps) => {
-    console.log(data);
-    openModal({
-      view: <SubmitModal closeModal={closeModal} />,
-      customSize: "420px",
+    const payload = {
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      fra_registered_broker: data.registered,
+    };
+
+    mutate(payload, {
+      onSuccess: () => {
+        openModal({
+          view: <SubmitModal closeModal={closeModal} />,
+          customSize: "420px",
+        });
+      },
+      onError: (error) => {
+        console.error("Submission failed:", error);
+      },
     });
   };
 
@@ -104,7 +118,7 @@ function Contact() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 ">
+          <label className="block text-sm font-medium text-gray-700">
             {t("fra_broker.label")}
           </label>
           <Controller
@@ -112,7 +126,7 @@ function Contact() {
             control={control}
             render={({ field }) => (
               <div className="flex w-full gap-4">
-                <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full ">
+                <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full">
                   <Radio
                     label={t("fra_broker.options.yes")}
                     value="true"
@@ -120,7 +134,7 @@ function Contact() {
                     onChange={() => field.onChange(true)}
                   />
                 </div>
-                <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full ">
+                <div className="rounded-lg border hover:border-[#B5BE34] p-4 mt-5 w-full">
                   <Radio
                     label={t("fra_broker.options.no")}
                     value="false"
@@ -137,9 +151,16 @@ function Contact() {
           type="submit"
           color="primary"
           className="w-full hover:bg-[#aab239]"
+          disabled={isPending}
         >
           {t("submit")}
         </Button>
+
+        {isError && (
+          <Text className="text-red-500 text-sm mt-2">
+            {error instanceof Error ? error.message : "An error occurred"}
+          </Text>
+        )}
       </form>
     </div>
   );
