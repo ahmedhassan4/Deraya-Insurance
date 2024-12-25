@@ -1,15 +1,15 @@
 "use client";
-import Line from "@/ui/Line";
-import Link from "next/link";
+// import Line from "@/ui/Line";
+// import Link from "next/link";
 import React from "react";
-import { BsArrowLeft } from "react-icons/bs";
+// import { BsArrowLeft } from "react-icons/bs";
 import { Button, Input, Radio, Text } from "rizzui";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import SubmitModal from "./SubmitModal";
 import useModal from "@/components/modal-views/use-madal";
-import { useLocale, useTranslations } from "next-intl";
+import {  useTranslations } from "next-intl";
 import { useGetInTouch } from "@/hooks/useGetInTouch";
 
 function Contact() {
@@ -39,7 +39,7 @@ function Contact() {
     },
   });
 
-  const locale = useLocale();
+  // const locale = useLocale();
   const { openModal, closeModal } = useModal();
 
   const onSubmit = (data: ContactFormProps) => {
@@ -65,7 +65,7 @@ function Contact() {
 
   return (
     <div className="w-full h-full overflow-hidden">
-      <Link href="/services">
+      {/* <Link href="/services">
         <Button
           variant="text"
           className={`text-[#111928] font-normal text-lg flex items-center ${
@@ -76,7 +76,7 @@ function Contact() {
           {t("back")}
         </Button>
       </Link>
-      <Line marginTop="10px" thickness=".5px" />
+      <Line marginTop="10px" thickness=".5px" /> */}
 
       <div className="my-6">
         <Text className="text-2xl font-bold mb-1">{t("header")}</Text>
