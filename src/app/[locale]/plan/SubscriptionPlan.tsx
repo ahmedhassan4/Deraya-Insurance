@@ -19,8 +19,6 @@ function SubscriptionPlan() {
     return <div>No plan data available. Please go back and fill the form.</div>;
   }
 
-  console.log("planData", planData);
-
   return (
     <div className="w-full h-full overflow-hidden">
       <NavigationButton title="back_to_services" url="services" />

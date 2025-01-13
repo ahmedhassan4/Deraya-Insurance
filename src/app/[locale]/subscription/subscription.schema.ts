@@ -81,12 +81,13 @@ export const useSubscriptionSchema = (fields: string[]) => {
         });
         break;
       case "production_year":
+        const currentYear = new Date().getFullYear();
         schemaObj[internalField] = z
           .number({
             required_error: t("errors.car_year.empty"),
             invalid_type_error: t("errors.car_year.invalid"),
           })
-          .max(2018, t("errors.car_year.max"));
+          .max(currentYear, { message: t("errors.car_year.max") });
         break;
       case "company_name":
         schemaObj[internalField] = z.string().nonempty({

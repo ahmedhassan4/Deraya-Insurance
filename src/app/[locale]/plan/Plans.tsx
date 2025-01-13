@@ -12,7 +12,6 @@ import Image from "next/image";
 import { Text } from "rizzui";
 import { IoCheckmarkCircleSharp, IoCloseCircle } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
-import Link from "next/link";
 
 type PropType = {
   slides: any[];
@@ -98,12 +97,12 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   </div>
                 </div>
                 {item?.most_popular && item?.name === "Bupa" && (
-                  <Link href="https://insurance.deraya.net/insurance/online-quotation-2021/get-a-quote.html">
+                  <a target="_blank" href="https://insurance.deraya.net/insurance/online-quotation-2021/get-a-quote.html">
                     <Text className="flex items-center text-[#B5BE34] cursor-pointer hover:underline">
                       Get an instant quote
                       <BsArrowRight className="ms-2" color="#B5BE34" />
                     </Text>
-                  </Link>
+                  </a>
                 )}
               </div>
             );

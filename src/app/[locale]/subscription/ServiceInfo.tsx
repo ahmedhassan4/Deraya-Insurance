@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React from "react";
@@ -10,13 +10,12 @@ import { useServiceData } from "@/hooks/useServiceData";
 import { ServiceType } from "@/types/service.type";
 
 function ServiceInfo() {
-  const t = useTranslations("subscription");
+  // const t = useTranslations("subscription");
   const searchParams = useSearchParams();
   const serviceId = searchParams.get("service_id");
 
   const { data, isLoading } = useServiceData();
 
-  console.log("is loading", isLoading);
   if (isLoading)
     return (
       <div>
@@ -53,9 +52,9 @@ function ServiceInfo() {
           </div>
         ))}
       </div>
-      <Text className="text-white mt-5 font-semibold italic">
+      {/* <Text className="text-white mt-5 font-semibold italic">
         {t("compare_prices")}
-      </Text>
+      </Text> */}
     </div>
   );
 }

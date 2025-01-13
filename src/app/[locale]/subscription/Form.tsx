@@ -174,7 +174,7 @@ export function DateField() {
                       value={dayjsValue}
                       key={openDatePicker?.toString()}
                       className="w-full"
-                      onChange={(newValue) => {
+                      onChange={newValue => {
                         field.onChange(newValue ? newValue.toDate() : null);
                         console.log("newValue");
                         setOpenDatePicker(false);
@@ -260,7 +260,7 @@ export const CarTypeField = () => {
         const data = await carsApi(page, searchParam);
         setMeta(data?.meta);
 
-        setOptions((prevOptions) => {
+        setOptions(prevOptions => {
           const newItems =
             data?.data?.map(
               (item: { name: string; id: number; models: any[] }) => ({
@@ -283,20 +283,20 @@ export const CarTypeField = () => {
 
   // Find the selected car make object to populate its models
   const selectedCarMake = useMemo(
-    () => options.find((opt) => opt.value === carMakeValue),
+    () => options.find(opt => opt.value === carMakeValue),
     [options, carMakeValue]
   );
 
   // Find the currently selected car_type option object
   const selectedCarTypeOption = useMemo(
-    () => options.find((opt) => opt.value === carMakeValue) || null,
+    () => options.find(opt => opt.value === carMakeValue) || null,
     [options, carMakeValue]
   );
 
   // Find the currently selected model option object
   const selectedModelOption = useMemo(() => {
     if (!selectedCarMake || !selectedCarMake.models) return null;
-    return selectedCarMake.models.find((m) => m.value === modelValue) || null;
+    return selectedCarMake.models.find(m => m.value === modelValue) || null;
   }, [selectedCarMake, modelValue]);
 
   return (
@@ -316,7 +316,7 @@ export const CarTypeField = () => {
                 options={options}
                 value={selectedCarTypeOption} // Control the selected value
                 hasMore={options.length < (meta?.total || 0)}
-                onLoadMore={() => setPage((prev) => prev + 1)}
+                onLoadMore={() => setPage(prev => prev + 1)}
                 onInputChange={setSearchParam}
                 onChange={(newValue: any) => {
                   field.onChange(newValue?.value || "");
@@ -363,23 +363,48 @@ export const CarTypeField = () => {
     </div>
   );
 };
+
 export const MarketValueField = () => {
+  const [years, setYears] = useState<any>([]);
+
   const {
-    register,
+    setValue,
     formState: { errors },
+    watch,
   } = useFormContext();
   const t = useTranslations("subscription");
+
+  useEffect(() => {
+    const startYear = 2017;
+    const currentYear = new Date().getFullYear();
+    const yearsArray = [];
+
+    for (let year = startYear; year <= currentYear; year++) {
+      yearsArray.push({ label: year, value: year });
+    }
+
+    setYears(yearsArray);
+  }, []);
+
+  console.log("years", watch("production_year"));
 
   return (
     <div className="space-y-4">
       <div>
-        <Input
+      <SelectReact
+          label={t("car_value")}
+          options={years}
+          onChange={(e: { label: string; value: number }) =>
+            setValue("market_value", e.value)
+          }
+        />
+        {/* <Input
           label={t("car_value")}
           type="number"
           size="lg"
           placeholder={t("placeholder.car_value")}
           {...register("market_value", { valueAsNumber: true })}
-        />
+        /> */}
         {errors.market_value?.message && (
           <p className="mt-1 text-sm text-red-500">
             {String(errors.market_value.message)}
@@ -391,11 +416,14 @@ export const MarketValueField = () => {
 };
 
 export const ProductionYearField = () => {
+
   const {
     register,
     formState: { errors },
   } = useFormContext();
   const t = useTranslations("subscription");
+
+
 
   return (
     <div className="space-y-4">
@@ -407,6 +435,7 @@ export const ProductionYearField = () => {
           placeholder={t("placeholder.car_year")}
           {...register("production_year", { valueAsNumber: true })}
         />
+      
         {errors.production_year?.message && (
           <p className="mt-1 text-sm text-red-500">
             {String(errors.production_year.message)}
@@ -416,7 +445,6 @@ export const ProductionYearField = () => {
     </div>
   );
 };
-
 
 export const CompanyNameField = () => {
   const {
@@ -512,8 +540,7 @@ export const InsuranceTypeField = () => {
           render={({ field }) => (
             <SelectReact
               value={
-                insuranceOptions.find((opt) => opt.value === field.value) ||
-                null
+                insuranceOptions.find(opt => opt.value === field.value) || null
               }
               className="py-3"
               options={insuranceOptions}
